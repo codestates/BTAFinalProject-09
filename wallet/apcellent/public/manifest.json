@@ -1,0 +1,17 @@
+{
+  "manifest_version": 3,
+  "short_name": "apcellent Extension",
+  "name": "apcellent",
+  "version": "0.1",
+  "description": "apcellent wallet",
+  "icons": {
+    "192": "logo192.png",
+    "512": "logo192.png"
+  },
+  "action": {
+    "default_icon": "logo192.png",
+    "default_popup": "index.html",
+    "default_title": "apcellent title"
+  },
+  "permissions": ["storage"]
+}
