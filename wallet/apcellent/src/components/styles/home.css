@@ -1,0 +1,126 @@
+.home .title {
+    position: absolute;
+    width: 450px;
+    height: 32px;
+    left: 0px;
+    top: 82px;
+
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 25px;
+    line-height: 30px;
+    text-align: center;
+    color: #054BB3;
+}
+
+.home .line {
+    position: absolute;
+    width: 449px;
+    height: 0px;
+    left: 1px;
+    top: 170px;
+    border: 0.5px solid rgba(0, 0, 0, 0.22);
+}
+
+
+/*menu1*/
+.home .menu1 .image {
+    position: absolute;
+    width: 26px;
+    height: 25px;
+    left: 20px;
+    top: 182px;
+    background: url(/src/assets/newwallet_icon.png);
+}
+.home .menu1 .title{
+    position: absolute;
+    width: 110px;
+    height: 18px;
+    left: 48px;
+    top: 185px;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 18px;
+    text-align: center;
+    color: #054BB3;
+}
+.home .menu1 .arrow {
+    position: absolute;
+    width: 28px;
+    height: 27.03px;
+    left: 391px;
+    top: 179px;
+    background: url(/src/assets/arrow.png);
+}
+
+
+/*menu2*/
+.home .menu2 .image {
+    position: absolute;
+    width: 28px;
+    height: 25px;
+    left: 18px;
+    top: 233px;
+    background: url(/src/assets/recoverwallet_icon.png);
+}
+.home .menu2 .title{
+    position: absolute;
+    width: 110px;
+    height: 18px;
+    left: 58px;
+    top: 236px;
+
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 18px;
+    text-align: center;
+    color: #054BB3;
+}
+.home .menu2 .arrow {
+    position: absolute;
+    width: 28px;
+    height: 27.03px;
+    left: 391px;
+    top: 231px;
+    background: url(/src/assets/arrow.png);
+}
+
+/*menu3*/
+.home .menu3 .image {
+    position: absolute;
+    width: 28px;
+    height: 25px;
+    left: 20px;
+    top: 281px;
+    background: url(/src/assets/importwallet_icon.png);
+}
+.home .menu3 .title{
+    position: absolute;
+    width: 105px;
+    height: 18px;
+    left: 58px;
+    top: 284px;
+
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 18px;
+    text-align: center;
+
+    color: #054BB3;
+ 
+}
+.home .menu3 .arrow {
+    position: absolute;
+    width: 28px;
+    height: 27.03px;
+    left: 391px;
+    top: 279px;
+    background: url(/src/assets/arrow.png);
+}

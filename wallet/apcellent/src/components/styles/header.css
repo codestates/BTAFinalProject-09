@@ -1,0 +1,41 @@
+.header {
+    position: absolute;
+    width: 450px;
+    height: 71px;
+    left: 0px;
+    top: 0px;
+    background: #0C2537;
+}
+
+.header .mainicon {
+    position: absolute;
+    width: 59px;
+    height: 55px;
+    left: 11px;
+    top: 8px;
+    background: url('/src/assets/apcellent_logo.png');
+}
+
+.header .network{
+    position: absolute;
+    width: 64px;
+    height: 13px;
+    left: 384px;
+    top: 1px;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 300;
+    font-size: 12px;
+    line-height: 15px;
+    text-align: center;
+    color: #24FF00;
+}
+
+.header .setting {
+    position: absolute;
+    width: 41px;
+    height: 37px;
+    left: 395px;
+    top: 17px;
+    /*background: url('/src/assets/setting.png');*/
+}

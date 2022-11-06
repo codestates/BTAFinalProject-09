@@ -1,0 +1,68 @@
+.newwallet .title{
+    position: absolute;
+    width: 450px;
+    height: 31px;
+    left: 0px;
+    top: 83px;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 25px;
+    line-height: 30px;
+    /* identical to box height */
+    text-align: center;
+    color: #054BB3;
+}
+
+.newwallet .input_name {
+    position: absolute;
+    width: 87px;
+    height: 16px;
+    left: 11px;
+    top: 137px;
+
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 11px;
+    line-height: 13px;
+
+    color: #054BB3;
+}
+.newwallet .input_type {
+    position: absolute;
+    width: 418px;
+    height: 39px;
+    left: 11px;
+    top: 153px;
+}
+
+.newwallet .msg {
+    position: absolute;
+    width: 338px;
+    height: 16px;
+    left: 35px;
+    top: 451px;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 300;
+    font-size: 11px;
+    line-height: 13px;
+    text-align:start;
+    color: #054BB3;
+}
+
+.newwallet .checkbox{
+    position: absolute;
+    width: 23px;
+    height: 24px;
+    left: 11px;
+    top: 445px;
+}
+
+.newwallet .button{
+    position: absolute;
+    left: 11px;
+    width: 418px;
+    top: 480px;
+}
