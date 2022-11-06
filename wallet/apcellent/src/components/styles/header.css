@@ -39,3 +39,11 @@
     top: 17px;
     /*background: url('/src/assets/setting.png');*/
 }
+
+.header .title2 {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 300;
+    font-size: 20px;
+    color:#054BB3;
+}
