@@ -1,0 +1,207 @@
+.main .userinfo {
+    position: absolute;
+    width: 438px;
+    height: 64px;
+    left: 6px;
+    top: 81px;
+
+    background: #0064E5;
+    border-radius: 13px;
+}
+
+.main .tokeninfo {
+    box-sizing: border-box;
+    position: absolute;
+    width: 438px;
+    height: 96px;
+    left: 6px;
+    top: 159px;
+
+    background: #FFFCFC;
+    border: 1px solid #F2EBEB;
+    border-radius: 13px;
+
+}
+
+.main .tokeninfo .img {
+    position: absolute;
+    width: 34px;
+    height: 34px;
+    left: 20px;
+    top: 10px;
+    background: url(/src/assets/aptcoin.png);
+}
+
+.main .tokeninfo .symbol {
+    position: absolute;
+    width: 50px;
+    left: 65px;
+    top: 10px;
+    text-align: start;
+
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 11px;
+    line-height: 13px;
+
+    color: #8B8B8B;
+}
+
+.main .tokeninfo .name {
+    position: absolute;
+    width: 50px;
+    left: 63px;
+    top: 30px;
+    text-align: start;
+
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 18px;
+    /* identical to box height */
+    
+    color: #000000;
+}
+
+.main .tokeninfo .amount {
+    position: absolute;
+    width: 150px;
+    height: 19px;
+    left: 170px;
+    top: 20px;
+
+    text-align: start;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 18px;
+    /* identical to box height */
+    
+    color: #054BB3;
+}
+
+.main .tokeninfo .buyicon {
+    position: absolute;
+    left: 330px;
+    top: 18.5px;
+    text-align: start;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18.5px;
+    line-height: 18px;
+
+    color: #054BB3;
+}
+
+.main .tokeninfo .buy {
+    position: absolute;
+    left: 352px;
+    top: 19px;
+
+    text-align: start;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 16px;
+    
+    color: #054BB3;
+}
+.main .tokeninfo .sendicon {
+    position: absolute;
+    left: 380px;
+    top: 17.5px;
+    text-align: start;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 19px;
+    line-height: 18px;
+
+    color: #054BB3;
+}
+
+.main .tokeninfo .send {
+    position: absolute;
+    left: 400px;
+    top: 19.5px;
+
+    text-align: start;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 16px;
+    
+    color: #054BB3;
+}
+
+
+.main .addtoken {
+    position: absolute;
+    width: 438px;
+    height: 41px;
+    left: 6px;
+    top: 276px;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 13px;
+    line-height: 41px;
+    color: #054BB3;
+
+    background: #E2EBFA;
+    border-radius: 13px;
+    
+}
+
+.main .copy{
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    left: 25px;
+    top: 35px;
+    z-index: 1;
+}
+
+.main .userinfo .walletname {
+    position: absolute;
+    width: 200px;
+    height: 18px;
+    left: 25px;
+    top: 10px;
+
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 18px;
+    text-align: left;
+    
+    z-index: 2;
+    color: #FFFFFF;
+}
+
+.main .userinfo .address {
+    position: absolute;
+    width: 350px;
+    height: 13px;
+    left: 45px;
+    top: 35px;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+    
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 11px;
+    line-height: 13px;
+    text-align: left;
+    z-index: 3;
+    color: #FFFFFF; 
+}

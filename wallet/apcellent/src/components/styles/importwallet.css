@@ -1,0 +1,74 @@
+.import .title {
+    position: absolute;
+    width: 450px;
+    height: 31px;
+    left: 0px;
+    top: 85px;
+
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 25px;
+    line-height: 30px;
+    /* identical to box height */
+
+    text-align: center;
+
+    color: #054BB3;
+}
+
+.import .inputype1 {
+    position: absolute;
+    width: 418px;
+    height: 16px;
+    left: 11px;
+    top: 137px;
+
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 11px;
+    line-height: 13px;
+
+    color: #054BB3;
+}
+
+.import .inputype2 {
+    position: absolute;
+    width: 418px;
+    height: 16px;
+    left: 11px;
+    top: 250px;
+
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 11px;
+    line-height: 13px;
+
+    color: #054BB3;
+}
+
+.import .inputype3 {
+    position: absolute;
+    width: 418px;
+    height: 16px;
+    left: 11px;
+    top: 310px;
+
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 11px;
+    line-height: 13px;
+
+    color: #054BB3;
+}
+
+.import .button {
+    position: absolute;
+    left: 11px;
+    width: 418px;
+    top: 380px;
+}
+

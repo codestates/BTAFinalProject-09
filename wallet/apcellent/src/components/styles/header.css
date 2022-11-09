@@ -47,3 +47,8 @@
     font-size: 20px;
     color:#054BB3;
 }
+
+.header .button {
+    color:red;
+    z-index: 1;
+}

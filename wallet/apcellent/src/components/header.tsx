@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React from 'react';
 import './styles/header.css';
 import SettingsSharpIcon from '@mui/icons-material/SettingsSharp';
 import Box from '@mui/material/Box';
@@ -9,12 +9,13 @@ import RadioGroup, { useRadioGroup } from '@mui/material/RadioGroup';
 import Radio from '@mui/material/Radio';
 import styled from '@emotion/styled';
 import { Typography } from '@mui/material';
+import Button from '@mui/material/Button';
 
 const Header = () => {
     interface StyledFormControlLabelProps extends FormControlLabelProps {
         checked: boolean;
     }
-      
+     
     const [open, setOpen] = React.useState(false);
 
     const handleClick = () => {
@@ -29,7 +30,7 @@ const Header = () => {
       position: 'absolute',
       top: 52,
       width:150,
-      height:100,
+      height:160,
       right: 15,
       zIndex: 1,
       border: '1px solid',
@@ -46,6 +47,11 @@ const Header = () => {
         },
     }));
 
+    const disconnect = () => {
+      chrome.storage.local.clear();
+      window.location.href = '/index.html';
+    }
+   
     function MyFormControlLabel(props: FormControlLabelProps) {
         const radioGroup = useRadioGroup();
       
@@ -75,6 +81,7 @@ const Header = () => {
                             <MyFormControlLabel value="1" style={{"textAlign":"center"}} label={<Typography color="#054BB3">Devnet</Typography>} control={<Radio size='small'/>} />
                             <MyFormControlLabel value="2" style={{"textAlign":"center"}} label={<Typography color="#054BB3">Bitnet</Typography>}  control={<Radio size='small'/>} />
                         </RadioGroup>
+                          <Button color='error' onClick={disconnect} className='button'>DISCONNECT</Button>
                     </Box>) : null
                 }
             </Box>
