@@ -37,7 +37,13 @@ const TransactionTable: FC<TransactionTableProps> = ({ transactions }) => {
           const receiverOrCounterparty = getTransactionCounterparty(tx);
           return (
             <TableRow key={tx.hash}>
-              <TableCell>{`version` in tx ? tx.version : `-`}</TableCell>
+              <TableCell>
+                {`version` in tx ? (
+                  <Link href={`/txn/${tx.version}`}>{tx.version}</Link>
+                ) : (
+                  `-`
+                )}
+              </TableCell>
               <TableCell>{tx.type}</TableCell>
               <TableCell>
                 {`timestamp` in tx

@@ -9,7 +9,15 @@ export default function FunctionCell({
   transaction,
   ...props
 }: FunctionCellProps) {
-  if (!(`payload` in transaction) || !(`function` in transaction.payload)) {
+  if (!(`payload` in transaction)) {
+    return null;
+  }
+
+  if (transaction.payload.type === `script_payload`) {
+    return <Chip label="Script" {...props} />;
+  }
+
+  if (!(`function` in transaction.payload)) {
     return null;
   }
 

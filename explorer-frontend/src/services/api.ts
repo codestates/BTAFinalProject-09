@@ -37,6 +37,14 @@ const api = {
     const client = new AptosClient(this.nodeUrl);
     return client.getBlockByVersion(version, withTransactions);
   },
+  async getTransactionByVersion(version: number): Promise<Types.Transaction> {
+    const client = new AptosClient(this.nodeUrl);
+    return client.getTransactionByVersion(BigInt(version));
+  },
+  async getTransactionByHash(hash: string): Promise<Types.Transaction> {
+    const client = new AptosClient(this.nodeUrl);
+    return client.getTransactionByHash(hash);
+  },
 };
 
 export default api;
