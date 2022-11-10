@@ -17,17 +17,22 @@ const Home = () => {
         navigate("/standby")
       }
     }); 
+    //test()
   }, []);
 
   const test = async () =>{
-    //const client = new AptosClient(NODE_URL);
+    const client = new AptosClient(NODE_URL);
     //const faucetClient = new FaucetClient(NODE_URL, FAUCET_URL); // <:!:section_1
 
     // let mnemonic: string = getMnemonic(language.english,12);
     // const seed: Buffer = toSeed(mnemonic);
     // const seedHex: string = toSeedHex(mnemonic);
-    let mnemonic: string = bip39.generateMnemonic();
-    console.log(bip39.generateMnemonic())
+    // let mnemonic: string = bip39.generateMnemonic();
+    // console.log(bip39.generateMnemonic())
+
+
+    const data = await client.getAccountTransactions("0x63dcd7f39036f3a93547f71f79da504e03486003bdbf9c5278065763bad8d335");
+    console.log(data);
 
     //비밀번호 hasing
     //const msg = "aaaaaa";
