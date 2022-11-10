@@ -18,7 +18,9 @@ const NavLink = styled(Link)`
 const NavBar = () => {
   return (
     <Row sx={{ p: 2 }}>
-      <Image src={logoImage} alt="logo" />
+      <Link href="/">
+        <Image src={logoImage} alt="logo" />
+      </Link>
       <Row gap={2}>
         <NavLink href="/transactions">
           <Button color="inherit">Transactions</Button>

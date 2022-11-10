@@ -1,4 +1,4 @@
-import { AptosClient } from 'aptos';
+import { AptosClient, Types } from 'aptos';
 
 interface PaginationArgs {
   start?: number;
@@ -10,6 +10,18 @@ const api = {
   async getTransactions(args: PaginationArgs) {
     const client = new AptosClient(this.nodeUrl);
     return client.getTransactions(args);
+  },
+  async getLedgerInfo() {
+    const client = new AptosClient(this.nodeUrl);
+    return client.getLedgerInfo();
+  },
+  async getAccountResources(address: string) {
+    const client = new AptosClient(this.nodeUrl);
+    return client.getAccountResources(address);
+  },
+  async getTableItem(tableHandle: string, data: Types.TableItemRequest) {
+    const client = new AptosClient(this.nodeUrl);
+    return client.getTableItem(tableHandle, data);
   },
 };
 
