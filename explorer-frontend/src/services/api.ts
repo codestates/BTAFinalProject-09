@@ -23,6 +23,20 @@ const api = {
     const client = new AptosClient(this.nodeUrl);
     return client.getTableItem(tableHandle, data);
   },
+  async getBlockByHeight(
+    height: number,
+    withTransactions: boolean,
+  ): Promise<Types.Block> {
+    const client = new AptosClient(this.nodeUrl);
+    return client.getBlockByHeight(height, withTransactions);
+  },
+  async getBlockByVersion(
+    version: number,
+    withTransactions: boolean,
+  ): Promise<Types.Block> {
+    const client = new AptosClient(this.nodeUrl);
+    return client.getBlockByVersion(version, withTransactions);
+  },
 };
 
 export default api;

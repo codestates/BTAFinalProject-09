@@ -2,6 +2,7 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import { useQuery } from 'react-query';
+import useGetTPS from 'hooks/useGetTPS';
 import SearchBar from '../components/SearchBar';
 import Row from '../components/Row';
 import PageContainer from '../layouts/PageContainer';
@@ -15,6 +16,7 @@ export default function Home() {
   const { data } = useQuery([`ledgerInfo`], () => api.getLedgerInfo(), {
     refetchInterval: 10000,
   });
+  const { tps } = useGetTPS();
 
   return (
     <PageContainer>
@@ -42,14 +44,10 @@ export default function Home() {
         </Card>
         <Card sx={{ flex: 1 }}>
           <CardContent>
-            <Typography variant="h5">18</Typography>
+            <Typography variant="h5">
+              {tps ? Math.round(tps).toLocaleString(`en-US`) : `-`}
+            </Typography>
             <Typography variant="subtitle2">TPS</Typography>
-          </CardContent>
-        </Card>
-        <Card sx={{ flex: 1 }}>
-          <CardContent>
-            <Typography variant="h5">213176</Typography>
-            <Typography variant="subtitle2">Latest Version</Typography>
           </CardContent>
         </Card>
       </Row>
