@@ -1,3 +1,14 @@
+.main {
+    height: 550px;
+    text-align: center;
+    min-width: 450px;
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
+.main::-webkit-scrollbar{
+    display:none;
+}
+
 .main .userinfo {
     position: absolute;
     width: 438px;

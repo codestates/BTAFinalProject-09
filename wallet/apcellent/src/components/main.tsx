@@ -27,6 +27,15 @@ const Main = () => {
 
     const copyEvent = async() => {
         await navigator.clipboard.writeText(address);
+        chrome.runtime.sendMessage('', {
+            type: 'notification',
+            options: {
+                title: 'Apcellent',
+                message: 'Your address has been copied !!',
+                iconUrl: '/logo192.png',
+                type: 'basic'
+            }
+        });
     }
 
     // apotos coin 정보 get
@@ -44,6 +53,11 @@ const Main = () => {
         console.log(balance);
     }
 
+    // 구매 버튼
+    const buyButton = async()=>{
+        chrome.tabs.create({url:"https://www.bithumb.com/react/"});
+    }
+
     return(
         <div className="main">
             <div className="userinfo">
@@ -56,10 +70,10 @@ const Main = () => {
                 <div className="symbol">APT</div>
                 <div className="name">Aptos</div>
                 <div className="amount">{amount/decimals}</div>
-                <StoreIcon className="buyicon"/>
-                <div className="buy">Buy</div>
-                <ReplyIcon className="sendicon"/>
-                <div className="send">Send</div>
+                <StoreIcon className="buyicon" onClick={buyButton}/>
+                <div className="buy" onClick={buyButton}>Buy</div>
+                <ReplyIcon className="sendicon" onClick={() => navigate("/sendtoken")}/>
+                <div className="send" onClick={() => navigate("/sendtoken")}>Send</div>
             </div>
             <div className="addtoken">
                 Add tokens

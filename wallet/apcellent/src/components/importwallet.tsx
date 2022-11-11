@@ -72,7 +72,7 @@ const ImportWallet = () => {
             <div className="title">Import Wallet</div>
             <TextField 
                 className='inputype1' 
-                helperText="Invalid PrivateKey"
+                helperText={privatedFlag ? "Invalid PrivateKey": ""}
                 error={privatedFlag}
                 onChange={handleChange_private} 
                 focused={true} size='small' 

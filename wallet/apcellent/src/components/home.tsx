@@ -17,8 +17,22 @@ const Home = () => {
         navigate("/standby")
       }
     }); 
-    //test()
-  }, []);
+    test()
+    // chrome.alarms.onAlarm.addListener((alarm) => {
+    //   console.log(alarm.name); // refresh
+    //   helloWorld();
+    });
+
+  
+  // chrome.runtime.onInstalled.addListener(() => {
+  //   console.log('onInstalled...');
+  //   chrome.alarms.create('refresh', { periodInMinutes: 1 });
+  // });
+
+
+  // function helloWorld() {
+  //   console.log("Hello, world!");
+  // }
 
   const test = async () =>{
     const client = new AptosClient(NODE_URL);

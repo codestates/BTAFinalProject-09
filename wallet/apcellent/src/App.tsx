@@ -1,4 +1,3 @@
-import React from 'react';
 import { createHashRouter, RouterProvider } from 'react-router-dom';
 import Home from './components/home';
 import Main from './components/main';
@@ -8,6 +7,7 @@ import NewWallet from './components/newwallet';
 import Standby from './components/standby';
 import RecoverWallet from './components/recoverwallet';
 import ImportWallet from './components/importwallet';
+import SendToken from './components/sendtoken';
 
 const router = createHashRouter([
   {
@@ -33,6 +33,10 @@ const router = createHashRouter([
   {
     path: '/importwallet',
     element: <ImportWallet/>
+  },
+  {
+    path: '/sendtoken',
+    element: <SendToken/>
   }
 ])
 

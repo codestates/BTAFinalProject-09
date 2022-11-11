@@ -1,0 +1,291 @@
+.sendtoken {
+    height: 650px;
+    text-align: center;
+    min-width: 450px;
+    overflow-x: hidden;
+    overflow-y: visible;
+}
+.sendtoken::-webkit-scrollbar{
+    display:none;
+}
+.sendtoken .title {
+    position: absolute;
+    width: 171px;
+    height: 31px;
+    left: 20px;
+    top: 90px;
+
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 25px;
+    line-height: 30px;
+    text-align: start;
+    /* identical to box height */
+    color: #054BB3;
+}
+
+.sendtoken .recipient_input{
+    position: absolute;
+    width: 400px;
+    height: 39px;
+    left: 20px;
+    top: 155px;
+}
+
+
+.sendtoken .amount_input{
+    position: absolute;
+    width: 400px;
+    height: 39px;
+    left: 20px;
+    top: 230px;
+}
+
+.sendtoken .amount_img {
+    position: absolute;
+    width: 10px;
+    height: 11px;
+    left: 305px;
+    top: 215.5px;
+
+    text-align: end;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 8px;
+    line-height: 10px;
+    color: #054BB3;
+}
+
+.sendtoken .amount_text {
+    position: absolute;
+    width: 60px;
+    height: 11px;
+    left: 320px;
+    top: 216px;
+    text-align: start;
+
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 8px;
+    line-height: 10px;
+
+    color: #054BB3;
+}
+
+.sendtoken .amount_type  {
+    position: absolute;
+    width: 28px;
+    height: 11px;
+    left: 385px;
+    top: 216px;
+    
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 8px;
+    line-height: 10px;
+    
+    color: #054BB3;
+}
+
+.sendtoken .memo_input  {
+    position: absolute;
+    width: 400px;
+    height: 39px;
+    left: 20px;
+    top: 310px;
+    
+}
+
+.sendtoken .feeMenu {
+    position: absolute;
+    width: 400px;
+    height: 102px;
+    left: 20px;
+    top: 380px;
+
+    background: #E2EBFA;
+    border-radius: 13px;
+}
+
+.sendtoken .fee {
+    position: absolute;
+    width: 87px;
+    height: 16px;
+    left: 20px;
+    top: 10px;
+
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 11px;
+    line-height: 13px;
+    text-align: start;
+
+    color: #054BB3;
+}
+.sendtoken .fee_text{
+    position: absolute;
+    width: 70px;
+    height: 16px;
+    left: 250px;
+    top: 10px;
+
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 11px;
+    line-height: 13px;
+    text-align: right;
+
+    color: #054BB3;
+
+}
+.sendtoken .fee_type{
+    position: absolute;
+    width: 70px;
+    height: 16px;
+    left: 300px;
+    top: 10px;
+
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 11px;
+    line-height: 13px;
+    text-align: right;
+
+    color: #054BB3;
+
+}
+
+
+.sendtoken .balance {
+    position: absolute;
+    width: 87px;
+    height: 16px;
+    left: 20px;
+    top: 40px;
+
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 11px;
+    line-height: 13px;
+    text-align: start;
+
+    color: #054BB3;
+}
+.sendtoken .balance_text {
+    position: absolute;
+    width: 70px;
+    height: 16px;
+    left: 250px;
+    top: 40px;
+
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 11px;
+    line-height: 13px;
+    text-align: right;
+
+    color: #054BB3;
+
+}
+.sendtoken .balance_type {
+    position: absolute;
+    width: 70px;
+    height: 16px;
+    left: 300px;
+    top: 40px;
+
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 11px;
+    line-height: 13px;
+    text-align: right;
+
+    color: #054BB3;
+
+}
+
+.sendtoken .balancetx {
+    position: absolute;
+    width: 87px;
+    height: 16px;
+    left: 20px;
+    top: 70px;
+
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 11px;
+    line-height: 13px;
+    text-align: start;
+
+    color: #054BB3;
+}
+.sendtoken .balancetx_text {
+    position: absolute;
+    width: 70px;
+    height: 16px;
+    left: 250px;
+    top: 70px;
+
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 11px;
+    line-height: 13px;
+    text-align: right;
+
+    color: #054BB3;
+
+}
+.sendtoken .balancetx_type {
+    position: absolute;
+    width: 70px;
+    height: 16px;
+    left: 300px;
+    top: 70px;
+
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 11px;
+    line-height: 13px;
+    text-align: right;
+
+    color: #054BB3;
+
+}
+
+.sendtoken .password_input {
+    position: absolute;
+    width: 400px;
+    height: 16px;
+    left: 20px;
+    top: 520px;
+
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 11px;
+    line-height: 13px;
+    text-align: right;
+
+    color: #054BB3;
+}
+
+.sendtoken .button {
+    position: absolute;
+    width: 400px;
+    height: 35px;
+    left: 20px;
+    top: 580px;
+}

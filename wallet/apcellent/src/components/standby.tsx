@@ -17,13 +17,12 @@ const Standby = () => {
         setPwd(event.target.value);
     };
 
-    const unlock = () => {
+    const unlock = async () => {
          chrome.storage.local.get(["lock"], (result) => {
             const original = result["lock"] 
             let convert = new Uint8Array(Buffer.from(pwd,'base64')); // let str = Buffer.from(key.secretKey).toString('base64');
             const hash = HexString.fromUint8Array(sha256.hash(convert)).toString();
-            console.log(original)
-            console.log(hash)
+
             if(original === hash){
                 navigate('/main');
             }else{
@@ -31,6 +30,8 @@ const Standby = () => {
             }
         }); 
     }
+
+
 
     return(
         <div className="standby">
