@@ -1,19 +1,18 @@
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
-import { useQuery } from 'react-query';
 import useGetTPS from 'hooks/useGetTPS';
+import useLedgerInfo from 'hooks/useLedgerInfo';
 import SearchBar from '../components/SearchBar';
 import Row from '../components/Row';
 import PageContainer from '../layouts/PageContainer';
 import TransactionPreview from '../components/TransactionPreview';
-import api from '../services/api';
 import useTotalSupply from '../hooks/useTotalSupply';
 import getFormattedBalanceStr from '../utils/getFormattedBalanceStr';
 
 export default function Home() {
   const totalSupply = useTotalSupply();
-  const { data } = useQuery([`ledgerInfo`], () => api.getLedgerInfo(), {
+  const { data } = useLedgerInfo({
     refetchInterval: 10000,
   });
   const { tps } = useGetTPS();

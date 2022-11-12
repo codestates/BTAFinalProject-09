@@ -1,8 +1,5 @@
 import { useRouter } from 'next/router';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
-import api from 'services/api';
-import { useQuery } from 'react-query';
-import { Types } from 'aptos';
 import { useMemo } from 'react';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
@@ -11,6 +8,7 @@ import Typography from '@mui/material/Typography';
 import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
 import getFormattedBalanceStr from 'utils/getFormattedBalanceStr';
+import useAccountResources from 'hooks/useAccountResources';
 
 interface CoinStore {
   coin: {
@@ -23,10 +21,7 @@ export default function AccountHeader() {
   const address =
     typeof router.query.address === `string` ? router.query.address : ``;
 
-  const { data } = useQuery<Array<Types.MoveResource>>(
-    [`accountResources`, { address }],
-    () => api.getAccountResources(address),
-  );
+  const { data } = useAccountResources(address);
 
   const coinBalance = useMemo(() => {
     if (!data) {

@@ -6,7 +6,7 @@ interface PaginationArgs {
 }
 
 const api = {
-  nodeUrl: `https://fullnode.devnet.aptoslabs.com/v1`,
+  nodeUrl: `https://fullnode.testnet.aptoslabs.com/v1`,
   async getTransactions(args: PaginationArgs) {
     const client = new AptosClient(this.nodeUrl);
     const txs = await client.getTransactions(args);
@@ -45,6 +45,15 @@ const api = {
   async getTransactionByHash(hash: string): Promise<Types.Transaction> {
     const client = new AptosClient(this.nodeUrl);
     return client.getTransactionByHash(hash);
+  },
+  async getAccountTransactions(address: string, args: PaginationArgs) {
+    const client = new AptosClient(this.nodeUrl);
+    const txs = await client.getAccountTransactions(address, args);
+    return txs.reverse();
+  },
+  async getAccount(address: string) {
+    const client = new AptosClient(this.nodeUrl);
+    return client.getAccount(address);
   },
 };
 

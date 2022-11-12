@@ -25,12 +25,13 @@ const SearchBar: FC<TextFieldProps> = (props) => {
     }
 
     const tx = await api.getTransactionByHash(keyword).catch(() => false);
-    if (`version` in tx) {
+    if (typeof tx === `object` && `version` in tx) {
       router.push(`/txn/${tx.version}`);
       return;
     }
 
-    alert(`Unkown search value`);
+    // else account
+    router.push(`/account/${keyword}`);
   }, [keyword, router]);
 
   return (

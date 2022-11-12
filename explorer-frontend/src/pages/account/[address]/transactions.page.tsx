@@ -5,32 +5,35 @@ import api from 'services/api';
 import TransactionTable from 'components/TransactionTable';
 import Row from 'components/Row';
 import Pagination from '@mui/material/Pagination';
+import { useRouter } from 'next/router';
+import useAccount from 'hooks/useAccount';
 import AccountHeader from '../AccountHeader';
 import AccountTabs from '../AccountTabs';
 
 const PAGE_LIMIT = 20;
 
-export default function AccountDetail() {
+export default function AccountTransactions() {
+  const router = useRouter();
+  const address =
+    typeof router.query.address === `string` ? router.query.address : ``;
   const [page, setPage] = useState(1);
-  const { data: ledgerInfo } = useQuery(
-    [`ledgerInfo`],
-    () => api.getLedgerInfo(),
-    {
-      refetchInterval: 10000,
-    },
+  const { data: accountData } = useAccount(address);
+  const lastSequence = useMemo(
+    () => (accountData ? parseInt(accountData.sequence_number) : 0),
+    [accountData],
   );
   const lastPage = useMemo(() => {
-    const lastVersion = ledgerInfo ? parseInt(ledgerInfo.ledger_version) : 0;
-    return Math.floor(lastVersion / PAGE_LIMIT);
-  }, [ledgerInfo]);
+    return Math.ceil(lastSequence / PAGE_LIMIT);
+  }, [lastSequence]);
   const pageParams = useMemo(() => {
-    return {
-      start: (lastPage - page) * PAGE_LIMIT,
-      limit: PAGE_LIMIT,
-    };
-  }, [lastPage, page]);
-  const { data } = useQuery([`transactions`, pageParams], () =>
-    api.getTransactions(pageParams),
+    const start = Math.max(lastSequence - page * PAGE_LIMIT, 0);
+    const limit = start === 0 ? lastSequence % PAGE_LIMIT : PAGE_LIMIT;
+    return { start, limit };
+  }, [lastSequence, page]);
+  const { data } = useQuery(
+    [`accountTransactions`, address, pageParams],
+    () => api.getAccountTransactions(address, pageParams),
+    { enabled: lastPage > 0 },
   );
 
   const handleChangePage = useCallback(

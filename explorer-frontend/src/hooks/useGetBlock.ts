@@ -6,11 +6,13 @@ export function useGetBlockByHeight({
   height,
   withTransactions = true,
 }: {
-  height: number;
+  height: number | undefined;
   withTransactions?: boolean;
 }) {
-  const result = useQuery<Types.Block>([`block`, { height }], () =>
-    api.getBlockByHeight(height, withTransactions),
+  const result = useQuery<Types.Block>(
+    [`block`, { height }],
+    () => api.getBlockByHeight(height || 0, withTransactions),
+    { enabled: height !== undefined },
   );
 
   return result;

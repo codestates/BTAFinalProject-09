@@ -24,16 +24,14 @@ function calculateTps(startBlock: Types.Block, endBlock: Types.Block): number {
 export default function useGetTPSByBlockHeight(
   currentBlockHeight: number | undefined,
 ) {
-  const blockHeight = currentBlockHeight ?? TPS_FREQUENCY;
-
   const [tps, setTps] = useState<number | null>(null);
 
   const { data: startBlock } = useGetBlockByHeight({
-    height: blockHeight - TPS_FREQUENCY,
+    height: currentBlockHeight && currentBlockHeight - TPS_FREQUENCY,
     withTransactions: false,
   });
   const { data: endBlock } = useGetBlockByHeight({
-    height: blockHeight,
+    height: currentBlockHeight,
     withTransactions: false,
   });
 
