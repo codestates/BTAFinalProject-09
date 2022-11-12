@@ -88,9 +88,13 @@ const TransactionTable: FC<TransactionTableProps> = ({ transactions }) => {
                     )}
                   </TableCell>
                   <TableCell>
-                    {receiverOrCounterparty
-                      ? truncateAddress(receiverOrCounterparty.address)
-                      : ``}
+                    {receiverOrCounterparty ? (
+                      <Link href={`/account/${receiverOrCounterparty.address}`}>
+                        {truncateAddress(receiverOrCounterparty.address)}
+                      </Link>
+                    ) : (
+                      ``
+                    )}
                   </TableCell>
                   <TableCell>
                     <FunctionCell transaction={tx} />
