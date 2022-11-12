@@ -9,7 +9,6 @@ import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
 import getFormattedBalanceStr from 'utils/getFormattedBalanceStr';
 import useAccountResources from 'hooks/useAccountResources';
-import { CoinStore } from 'types/aptos';
 
 export default function AccountHeader() {
   const router = useRouter();
@@ -29,8 +28,7 @@ export default function AccountHeader() {
     if (!found) {
       return `0`;
     }
-    const coinStore = found.data as CoinStore;
-    return coinStore.coin.value;
+    return found.data.coin.value;
   }, [data]);
 
   const copyAddress = () => {

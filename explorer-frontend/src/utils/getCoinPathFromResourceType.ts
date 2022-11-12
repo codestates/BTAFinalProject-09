@@ -1,8 +1,6 @@
 export default function getCoinPathFromResourceType(type: string) {
-  const result = type.match(/<(.*?)>/);
-  if (!result) {
-    return ``;
-  }
-  const fullpath = result[1];
-  return fullpath;
+  const firstIndex = type.indexOf(`<`);
+  const lastIndex = type.lastIndexOf(`>`);
+  const path = type.substring(firstIndex + 1, lastIndex);
+  return path;
 }

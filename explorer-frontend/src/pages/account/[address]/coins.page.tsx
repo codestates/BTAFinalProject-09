@@ -12,7 +12,6 @@ import Skeleton from '@mui/material/Skeleton';
 import getFormattedBalanceStr from 'utils/getFormattedBalanceStr';
 import getCoinPathFromResourceType from 'utils/getCoinPathFromResourceType';
 import truncateAddressMiddle from 'utils/truncateAddressMiddle';
-import Typography from '@mui/material/Typography';
 import AccountTabs from '../AccountTabs';
 import AccountHeader from '../AccountHeader';
 
@@ -34,11 +33,9 @@ export default function AccountCoins() {
     return filtered.map((res) => ({
       type: getCoinPathFromResourceType(res.type),
       name: getCoinNameFromResourceType(res.type),
-      value: res.data.coin.value,
+      value: res.data?.coin.value || `0`,
     }));
   }, [data]);
-
-  console.log(coinStores);
 
   return (
     <PageContainer>
@@ -70,11 +67,7 @@ export default function AccountCoins() {
             : coinStores.map((store) => (
                 <TableRow key={store.type}>
                   <TableCell>{store.name}</TableCell>
-                  <TableCell>
-                    <Typography>
-                      {getFormattedBalanceStr(store.value)} APT
-                    </Typography>
-                  </TableCell>
+                  <TableCell>{getFormattedBalanceStr(store.value)}</TableCell>
                   <TableCell>{truncateAddressMiddle(store.type)}</TableCell>
                 </TableRow>
               ))}
