@@ -8,9 +8,7 @@ const PREVIEW_LIMIT = 10;
 
 const TransactionPreview: FC = () => {
   const limit = PREVIEW_LIMIT;
-  const { data } = useQuery([`transactions`, { limit }], () =>
-    api.getTransactions({ limit }),
-  );
+  const { data } = useQuery([`transactions`, { limit }], () => api.getTransactions({ limit }));
 
   if (!data) {
     return <CircularProgress />;

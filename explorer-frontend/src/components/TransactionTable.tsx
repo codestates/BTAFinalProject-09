@@ -6,7 +6,6 @@ import TableCell from '@mui/material/TableCell';
 import TableBody from '@mui/material/TableBody';
 import { Types } from 'aptos';
 import dayjs from 'dayjs';
-import { Button } from '@mui/material';
 import Link from 'next/link';
 import getTransactionCounterparty from '../utils/getTransactionCounterParty';
 import truncateAddress from '../utils/truncateAddress';
@@ -55,7 +54,7 @@ const TransactionTable: FC<TransactionTableProps> = ({ transactions }) => {
               <TableCell>
                 {`sender` in tx ? (
                   <Link href={`/account/${tx.sender}`}>
-                    <Button>{truncateAddress(tx.sender)}</Button>
+                    {truncateAddress(tx.sender)}
                   </Link>
                 ) : (
                   ``

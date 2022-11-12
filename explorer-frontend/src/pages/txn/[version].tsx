@@ -1,4 +1,5 @@
 import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -19,6 +20,7 @@ import ensureMillisecondTimestamp from 'utils/ensureMillisecondTimestamp';
 import getFormattedBalanceStr from 'utils/getFormattedBalanceStr';
 import getTransactionCounterparty from 'utils/getTransactionCounterParty';
 import truncateAddress from 'utils/truncateAddress';
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 
 function GridRow({ title, content }: { title: string; content: ReactNode }) {
   return (
@@ -57,239 +59,272 @@ export default function TransactionDetail() {
     );
   }
 
-  if (data?.type === `user_transaction`) {
-    const tx = data as Types.Transaction_UserTransaction;
-    const counterparty = getTransactionCounterparty(tx);
-    return (
-      <PageContainer>
-        <Card sx={{ m: 2 }}>
-          <CardContent>
-            <Box
-              gap={4}
-              sx={{ p: 2, display: `flex`, flexDirection: `column` }}
-            >
-              <GridRow title="Version" content={tx.version} />
-              <GridRow
-                title="Status"
-                content={
-                  tx.success ? (
-                    <Typography color="green">Success</Typography>
-                  ) : (
-                    <Typography color="red">Fail</Typography>
-                  )
-                }
-              />
-              <GridRow
-                title="Sender"
-                content={
-                  <Link href={`/account/${tx.sender}`}>
-                    {truncateAddress(tx.sender)}
-                  </Link>
-                }
-              />
-              {counterparty?.role === `receiver` && (
+  if (!data) {
+    return <PageContainer>Transaction Not Found</PageContainer>;
+  }
+
+  const renderContent = () => {
+    if (data?.type === `user_transaction`) {
+      const tx = data as Types.Transaction_UserTransaction;
+      const counterparty = getTransactionCounterparty(tx);
+      return (
+        <Box>
+          <Card sx={{ m: 2 }}>
+            <CardContent>
+              <Box
+                gap={4}
+                sx={{ p: 2, display: `flex`, flexDirection: `column` }}
+              >
+                <GridRow title="Version" content={tx.version} />
                 <GridRow
-                  title="Receiver"
+                  title="Status"
                   content={
-                    <Link href={`/account/${counterparty.address}`}>
-                      {truncateAddress(counterparty.address)}
+                    tx.success ? (
+                      <Typography color="green">Success</Typography>
+                    ) : (
+                      <Typography color="red">Fail</Typography>
+                    )
+                  }
+                />
+                <GridRow
+                  title="Sender"
+                  content={
+                    <Link href={`/account/${tx.sender}`}>
+                      {truncateAddress(tx.sender)}
                     </Link>
                   }
                 />
-              )}
-              {counterparty?.role === `smartContract` && (
+                {counterparty?.role === `receiver` && (
+                  <GridRow
+                    title="Receiver"
+                    content={
+                      <Link href={`/account/${counterparty.address}`}>
+                        {truncateAddress(counterparty.address)}
+                      </Link>
+                    }
+                  />
+                )}
+                {counterparty?.role === `smartContract` && (
+                  <GridRow
+                    title="Smart Contract"
+                    content={
+                      <Link href={`/account/${counterparty.address}`}>
+                        {truncateAddress(counterparty.address)}
+                      </Link>
+                    }
+                  />
+                )}
                 <GridRow
-                  title="Smart Contract"
+                  title="Function"
+                  content={<FunctionCell transaction={tx} />}
+                />
+                <GridRow
+                  title="Amount"
+                  content={<AmountCell transaction={tx} />}
+                />
+              </Box>
+            </CardContent>
+          </Card>
+
+          <Card sx={{ m: 2 }}>
+            <CardContent>
+              <Box
+                gap={4}
+                sx={{ p: 2, display: `flex`, flexDirection: `column` }}
+              >
+                <GridRow
+                  title="Block"
                   content={
-                    <Link href={`/account/${counterparty.address}`}>
-                      {truncateAddress(counterparty.address)}
+                    block ? (
+                      <Link href={`/block/${block.block_height}`}>
+                        {block.block_height}
+                      </Link>
+                    ) : (
+                      `-`
+                    )
+                  }
+                />
+                <GridRow title="Sequence Number" content={tx.sequence_number} />
+                <GridRow
+                  title="Expiration Timestamp"
+                  content={dayjs(
+                    ensureMillisecondTimestamp(tx.expiration_timestamp_secs),
+                  ).format(`YYYY-MM-DD HH:mm:ss`)}
+                />
+                <GridRow
+                  title="Timestamp"
+                  content={dayjs(
+                    ensureMillisecondTimestamp(tx.timestamp),
+                  ).format(`YYYY-MM-DD HH:mm:ss`)}
+                />
+                <GridRow
+                  title="Gas Fee"
+                  content={`${getFormattedBalanceStr(
+                    (
+                      BigInt(tx.gas_used) * BigInt(tx.gas_unit_price)
+                    ).toString(),
+                  )} APT`}
+                />
+                <GridRow
+                  title="Gas Unit Price"
+                  content={`${getFormattedBalanceStr(tx.gas_unit_price)} APT`}
+                />
+                <GridRow
+                  title="Max Gas Limit"
+                  content={`${parseInt(tx.max_gas_amount).toLocaleString(
+                    `en-US`,
+                  )} Gas Units`}
+                />
+                <GridRow title="VM Status" content={tx.vm_status} />
+              </Box>
+            </CardContent>
+          </Card>
+        </Box>
+      );
+    }
+
+    if (data?.type === `block_metadata_transaction`) {
+      const tx = data as Types.Transaction_BlockMetadataTransaction;
+      return (
+        <Box>
+          <Card sx={{ m: 2 }}>
+            <CardContent>
+              <Box
+                gap={4}
+                sx={{ p: 2, display: `flex`, flexDirection: `column` }}
+              >
+                <GridRow title="Type" content={tx.type} />
+                <GridRow title="Version" content={tx.version} />
+                <GridRow
+                  title="Status"
+                  content={
+                    tx.success ? (
+                      <Typography color="green">Success</Typography>
+                    ) : (
+                      <Typography color="red">Fail</Typography>
+                    )
+                  }
+                />
+                <GridRow
+                  title="Proposer"
+                  content={
+                    <Link href={`/account/${tx.proposer}`}>
+                      {truncateAddress(tx.proposer)}
                     </Link>
                   }
                 />
-              )}
-              <GridRow
-                title="Function"
-                content={<FunctionCell transaction={tx} />}
-              />
-              <GridRow
-                title="Amount"
-                content={<AmountCell transaction={tx} />}
-              />
-            </Box>
-          </CardContent>
-        </Card>
+                <GridRow title="ID" content={tx.id} />
+              </Box>
+            </CardContent>
+          </Card>
 
-        <Card sx={{ m: 2 }}>
-          <CardContent>
-            <Box
-              gap={4}
-              sx={{ p: 2, display: `flex`, flexDirection: `column` }}
-            >
-              <GridRow
-                title="Block"
-                content={
-                  block ? (
-                    <Link href={`/block/${block.block_height}`}>
-                      {block.block_height}
-                    </Link>
-                  ) : (
-                    `-`
-                  )
-                }
-              />
-              <GridRow title="Sequence Number" content={tx.sequence_number} />
-              <GridRow
-                title="Expiration Timestamp"
-                content={dayjs(
-                  ensureMillisecondTimestamp(tx.expiration_timestamp_secs),
-                ).format(`YYYY-MM-DD HH:mm:ss`)}
-              />
-              <GridRow
-                title="Timestamp"
-                content={dayjs(ensureMillisecondTimestamp(tx.timestamp)).format(
-                  `YYYY-MM-DD HH:mm:ss`,
-                )}
-              />
-              <GridRow
-                title="Gas Fee"
-                content={`${getFormattedBalanceStr(
-                  (BigInt(tx.gas_used) * BigInt(tx.gas_unit_price)).toString(),
-                )} APT`}
-              />
-              <GridRow
-                title="Gas Unit Price"
-                content={`${getFormattedBalanceStr(tx.gas_unit_price)} APT`}
-              />
-              <GridRow
-                title="Max Gas Limit"
-                content={`${parseInt(tx.max_gas_amount).toLocaleString(
-                  `en-US`,
-                )} Gas Units`}
-              />
-              <GridRow title="VM Status" content={tx.vm_status} />
-            </Box>
-          </CardContent>
-        </Card>
-      </PageContainer>
-    );
-  }
+          <Card sx={{ m: 2 }}>
+            <CardContent>
+              <Box
+                gap={4}
+                sx={{ p: 2, display: `flex`, flexDirection: `column` }}
+              >
+                <GridRow
+                  title="Block"
+                  content={
+                    block ? (
+                      <Link href={`/block/${block.block_height}`}>
+                        {block.block_height}
+                      </Link>
+                    ) : (
+                      `-`
+                    )
+                  }
+                />
+                <GridRow title="Epoch" content={tx.epoch} />
+                <GridRow title="Round" content={tx.round} />
+                <GridRow
+                  title="Timestamp"
+                  content={dayjs(
+                    ensureMillisecondTimestamp(tx.timestamp),
+                  ).format(`YYYY-MM-DD HH:mm:ss`)}
+                />
+                <GridRow title="VM Status" content={tx.vm_status} />
+              </Box>
+            </CardContent>
+          </Card>
+        </Box>
+      );
+    }
 
-  if (data?.type === `block_metadata_transaction`) {
-    const tx = data as Types.Transaction_BlockMetadataTransaction;
-    return (
-      <PageContainer>
-        <Card sx={{ m: 2 }}>
-          <CardContent>
-            <Box
-              gap={4}
-              sx={{ p: 2, display: `flex`, flexDirection: `column` }}
-            >
-              <GridRow title="Type" content={tx.type} />
-              <GridRow title="Version" content={tx.version} />
-              <GridRow
-                title="Status"
-                content={
-                  tx.success ? (
-                    <Typography color="green">Success</Typography>
-                  ) : (
-                    <Typography color="red">Fail</Typography>
-                  )
-                }
-              />
-              <GridRow
-                title="Proposer"
-                content={
-                  <Link href={`/account/${tx.proposer}`}>
-                    {truncateAddress(tx.proposer)}
-                  </Link>
-                }
-              />
-              <GridRow title="ID" content={tx.id} />
-            </Box>
-          </CardContent>
-        </Card>
+    if (data?.type === `state_checkpoint_transaction`) {
+      const tx = data as Types.Transaction_StateCheckpointTransaction;
+      return (
+        <Box>
+          <Card sx={{ m: 2 }}>
+            <CardContent>
+              <Box
+                gap={4}
+                sx={{ p: 2, display: `flex`, flexDirection: `column` }}
+              >
+                <GridRow title="Type" content={tx.type} />
+                <GridRow title="Version" content={tx.version} />
+                <GridRow
+                  title="Status"
+                  content={
+                    tx.success ? (
+                      <Typography color="green">Success</Typography>
+                    ) : (
+                      <Typography color="red">Fail</Typography>
+                    )
+                  }
+                />
+                <GridRow
+                  title="Block"
+                  content={
+                    block ? (
+                      <Link href={`/block/${block.block_height}`}>
+                        {block.block_height}
+                      </Link>
+                    ) : (
+                      `-`
+                    )
+                  }
+                />
+                <GridRow
+                  title="Timestamp"
+                  content={dayjs(
+                    ensureMillisecondTimestamp(tx.timestamp),
+                  ).format(`YYYY-MM-DD HH:mm:ss`)}
+                />
+                <GridRow title="VM Status" content={tx.vm_status} />
+              </Box>
+            </CardContent>
+          </Card>
+        </Box>
+      );
+    }
 
-        <Card sx={{ m: 2 }}>
-          <CardContent>
-            <Box
-              gap={4}
-              sx={{ p: 2, display: `flex`, flexDirection: `column` }}
-            >
-              <GridRow
-                title="Block"
-                content={
-                  block ? (
-                    <Link href={`/block/${block.block_height}`}>
-                      {block.block_height}
-                    </Link>
-                  ) : (
-                    `-`
-                  )
-                }
-              />
-              <GridRow title="Epoch" content={tx.epoch} />
-              <GridRow title="Round" content={tx.round} />
-              <GridRow
-                title="Timestamp"
-                content={dayjs(ensureMillisecondTimestamp(tx.timestamp)).format(
-                  `YYYY-MM-DD HH:mm:ss`,
-                )}
-              />
-              <GridRow title="VM Status" content={tx.vm_status} />
-            </Box>
-          </CardContent>
-        </Card>
-      </PageContainer>
-    );
-  }
+    return `Unknown Transaction`;
+  };
 
-  if (data?.type === `state_checkpoint_transaction`) {
-    const tx = data as Types.Transaction_StateCheckpointTransaction;
-    return (
-      <PageContainer>
-        <Card sx={{ m: 2 }}>
-          <CardContent>
-            <Box
-              gap={4}
-              sx={{ p: 2, display: `flex`, flexDirection: `column` }}
-            >
-              <GridRow title="Type" content={tx.type} />
-              <GridRow title="Version" content={tx.version} />
-              <GridRow
-                title="Status"
-                content={
-                  tx.success ? (
-                    <Typography color="green">Success</Typography>
-                  ) : (
-                    <Typography color="red">Fail</Typography>
-                  )
-                }
-              />
-              <GridRow
-                title="Block"
-                content={
-                  block ? (
-                    <Link href={`/block/${block.block_height}`}>
-                      {block.block_height}
-                    </Link>
-                  ) : (
-                    `-`
-                  )
-                }
-              />
-              <GridRow
-                title="Timestamp"
-                content={dayjs(ensureMillisecondTimestamp(tx.timestamp)).format(
-                  `YYYY-MM-DD HH:mm:ss`,
-                )}
-              />
-              <GridRow title="VM Status" content={tx.vm_status} />
-            </Box>
-          </CardContent>
-        </Card>
-      </PageContainer>
-    );
-  }
+  const copyAddress = () => {
+    navigator.clipboard.writeText(data.hash);
+  };
 
-  return <PageContainer>Unknown Transaction</PageContainer>;
+  return (
+    <PageContainer>
+      <Box sx={{ m: 2 }}>
+        <Typography variant="h3">Transaction</Typography>
+      </Box>
+      <Box sx={{ m: 2 }}>
+        <Button
+          variant="outlined"
+          color="secondary"
+          endIcon={<ContentCopyIcon />}
+          onClick={copyAddress}
+          sx={{ textTransform: `none` }}
+        >
+          {data.hash}
+        </Button>
+      </Box>
+
+      {renderContent()}
+    </PageContainer>
+  );
 }

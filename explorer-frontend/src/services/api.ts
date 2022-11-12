@@ -9,7 +9,8 @@ const api = {
   nodeUrl: `https://fullnode.devnet.aptoslabs.com/v1`,
   async getTransactions(args: PaginationArgs) {
     const client = new AptosClient(this.nodeUrl);
-    return client.getTransactions(args);
+    const txs = await client.getTransactions(args);
+    return txs.reverse();
   },
   async getLedgerInfo() {
     const client = new AptosClient(this.nodeUrl);

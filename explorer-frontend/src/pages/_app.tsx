@@ -4,7 +4,13 @@ import Head from 'next/head';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import theme from '../theme';
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+    },
+  },
+});
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
