@@ -9,12 +9,7 @@ import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
 import getFormattedBalanceStr from 'utils/getFormattedBalanceStr';
 import useAccountResources from 'hooks/useAccountResources';
-
-interface CoinStore {
-  coin: {
-    value: string;
-  };
-}
+import { CoinStore } from 'types/aptos';
 
 export default function AccountHeader() {
   const router = useRouter();
