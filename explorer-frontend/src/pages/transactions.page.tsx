@@ -1,4 +1,4 @@
-import { Box, CircularProgress, Pagination } from '@mui/material';
+import { Box, Pagination } from '@mui/material';
 import Row from 'components/Row';
 import SearchBar from 'components/SearchBar';
 import TransactionTable from 'components/TransactionTable';
@@ -18,16 +18,19 @@ export default function TransactionList() {
       refetchInterval: 10000,
     },
   );
+
   const lastPage = useMemo(() => {
     const lastVersion = ledgerInfo ? parseInt(ledgerInfo.ledger_version) : 0;
     return Math.floor(lastVersion / PAGE_LIMIT);
   }, [ledgerInfo]);
+
   const pageParams = useMemo(() => {
     return {
       start: (lastPage - page) * PAGE_LIMIT,
       limit: PAGE_LIMIT,
     };
   }, [lastPage, page]);
+
   const { data } = useQuery([`transactions`, pageParams], () =>
     api.getTransactions(pageParams),
   );
@@ -45,7 +48,7 @@ export default function TransactionList() {
         <Row>
           <SearchBar sx={{ flex: 1 }} />
         </Row>
-        {data ? <TransactionTable transactions={data} /> : <CircularProgress />}
+        <TransactionTable transactions={data} />
         <Row sx={{ p: 4, justifyContent: `center` }}>
           <Pagination
             count={lastPage}
