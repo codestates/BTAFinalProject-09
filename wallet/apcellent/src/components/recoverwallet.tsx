@@ -1,10 +1,7 @@
-import { NODE_URL, FAUCET_URL} from "../common";
+import common from "../common";
 import { AptosClient, AptosAccount, CoinClient, FaucetClient, HexString } from "aptos";
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import ContentCopyIcon from '@mui/icons-material/ContentCopy';
-import StoreIcon from '@mui/icons-material/Store';
-import ReplyIcon from '@mui/icons-material/Reply';
 import './styles/recoverwallet.css';
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";

@@ -1,12 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import './styles/newwallet.css';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Checkbox from '@mui/material/Checkbox';
 import { AptosAccount, FaucetClient, HexString } from "aptos";
-import { NODE_URL, FAUCET_URL} from "../common";
+import common from "../common";
 import * as sha256 from "fast-sha256";
 import { useNavigate } from 'react-router-dom';
+import { NetworkContext } from '../context';
 
 const NewWallet = () => {
   
@@ -16,6 +17,7 @@ const NewWallet = () => {
   const [name, setName] = useState(""); //name
   const [pwd, setPwd] = useState(""); //password 
   const [cpwd, setCPwd] = useState(""); //cpassword
+  const { index } = useContext(NetworkContext);
   const navigate = useNavigate();
   const bip39 = require('bip39');
 
@@ -58,14 +60,25 @@ const NewWallet = () => {
     const account =  AptosAccount.fromDerivePath("m/44'/637'/0'/0'/0'",mnemonic);
     const info = account.toPrivateKeyObject();
     await chrome.storage.local.set({"info": info});
-    // chrome.storage.local.get(["info"], (result) => {
-    //   console.log(result["info"].address)
-    // });
+    chrome.storage.local.get(["info"], (result) => {
+      console.log(result["info"])
+    });
  
     //faucet test 삭제 해도됨 
-    const faucetClient = new FaucetClient(NODE_URL, FAUCET_URL); // <:!:section_1
+    const faucetClient = new FaucetClient(common.GetNetWork(index), common.GetFaucetNetWork(index)); // <:!:section_1
     await faucetClient.fundAccount(account.authKey(),100_000_000);
-    navigate("/main")
+    await faucetClient.fundAccount(account.authKey(),100_000_000);
+    await faucetClient.fundAccount(account.authKey(),100_000_000);
+    await faucetClient.fundAccount(account.authKey(),100_000_000);
+    await faucetClient.fundAccount(account.authKey(),100_000_000);
+    await faucetClient.fundAccount(account.authKey(),100_000_000);
+    await faucetClient.fundAccount(account.authKey(),100_000_000);
+    await faucetClient.fundAccount(account.authKey(),100_000_000);
+    await faucetClient.fundAccount(account.authKey(),100_000_000);
+    await faucetClient.fundAccount(account.authKey(),100_000_000);
+    await faucetClient.fundAccount(account.authKey(),100_000_000);
+    await faucetClient.fundAccount(account.authKey(),100_000_000);
+    //navigate("/main")
   }
 
   useEffect(() => {

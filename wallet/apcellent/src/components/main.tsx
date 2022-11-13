@@ -1,11 +1,13 @@
-import { NODE_URL, FAUCET_URL} from "../common";
+import common from "../common";
 import { AptosClient, AptosAccount, CoinClient, FaucetClient } from "aptos";
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import StoreIcon from '@mui/icons-material/Store';
 import ReplyIcon from '@mui/icons-material/Reply';
 import './styles/main.css';
+import { NetworkContext } from "../context";
+import { WalletClient } from "../api/wallet";
 
 
 const Main = () => {
@@ -13,6 +15,7 @@ const Main = () => {
     const [walletName, setWalletName] = useState("");
     const [address, setAddress] = useState("");
     const [amount, setAmount] = useState(0);
+    const { index } = useContext(NetworkContext);
     const decimals = 10**8;
 
     useEffect(() => {
@@ -21,11 +24,30 @@ const Main = () => {
         });
         chrome.storage.local.get(["info"], (result) => {
             setAddress(result["info"].address)
-            getBalance(result["info"].address)
+            const walletClient = new WalletClient(common.GetNetWork(index), common.GetFaucetNetWork(index));
+            try{
+                walletClient.getBalance(result["info"].address).then((_balance)=>{
+                    setAmount(_balance);
+                });
+            }catch(e){
+                setAmount(0)
+            }
         }); 
     }, []);
 
+    useEffect(() => {
+        const walletClient = new WalletClient(common.GetNetWork(index), common.GetFaucetNetWork(index));
+        try{
+            walletClient.getBalance(address).then((_balance)=>{
+                setAmount(_balance);
+            });
+        }catch(e){
+            setAmount(0)
+        }
+    }, [index]);
+
     const copyEvent = async() => {
+
         await navigator.clipboard.writeText(address);
         chrome.runtime.sendMessage('', {
             type: 'notification',
@@ -39,19 +61,19 @@ const Main = () => {
     }
 
     // apotos coin 정보 get
-    const getBalance = async (address:string) => {
-        const client = new AptosClient(NODE_URL);
-        let balance = 0;
-        const resources: any = await client.getAccountResources(address);
+    // const getBalance = async (address:string) => {
+    //     const client = new AptosClient(common.GetNetWork(index));
+    //     let balance = 0;
+    //     const resources: any = await client.getAccountResources(address);
     
-        Object.values(resources).forEach((value: any) => {
-            if (value.type === "0x1::coin::CoinStore<0x1::aptos_coin::AptosCoin>") {
-                balance = Number(value.data.coin.value);
-            }
-        });
-        setAmount(balance);
-        console.log(balance);
-    }
+    //     Object.values(resources).forEach((value: any) => {
+    //         if (value.type === "0x1::coin::CoinStore<0x1::aptos_coin::AptosCoin>") {
+    //             balance = Number(value.data.coin.value);
+    //         }
+    //     });
+    //     setAmount(balance);
+    //     console.log(balance);
+    // }
 
     // 구매 버튼
     const buyButton = async()=>{

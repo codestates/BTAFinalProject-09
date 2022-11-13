@@ -1,4 +1,4 @@
-import { NODE_URL, FAUCET_URL} from "../common";
+import common from "../common";
 import { AptosClient, AptosAccount, CoinClient, FaucetClient, HexString } from "aptos";
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';

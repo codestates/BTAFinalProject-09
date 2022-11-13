@@ -1,4 +1,4 @@
-import { NODE_URL, FAUCET_URL} from "../common";
+import common from "../common";
 import { AptosClient, AptosAccount, CoinClient, FaucetClient, HexString } from "aptos";
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -23,19 +23,17 @@ const Home = () => {
     //   helloWorld();
     });
 
-  
   // chrome.runtime.onInstalled.addListener(() => {
   //   console.log('onInstalled...');
   //   chrome.alarms.create('refresh', { periodInMinutes: 1 });
   // });
-
 
   // function helloWorld() {
   //   console.log("Hello, world!");
   // }
 
   const test = async () =>{
-    const client = new AptosClient(NODE_URL);
+    //const client = new AptosClient(NODE_URL);
     //const faucetClient = new FaucetClient(NODE_URL, FAUCET_URL); // <:!:section_1
 
     // let mnemonic: string = getMnemonic(language.english,12);
@@ -44,9 +42,8 @@ const Home = () => {
     // let mnemonic: string = bip39.generateMnemonic();
     // console.log(bip39.generateMnemonic())
 
-
-    const data = await client.getAccountTransactions("0x63dcd7f39036f3a93547f71f79da504e03486003bdbf9c5278065763bad8d335");
-    console.log(data);
+    // const data = await client.getAccountTransactions("0x63dcd7f39036f3a93547f71f79da504e03486003bdbf9c5278065763bad8d335");
+    // console.log(data);
 
     //비밀번호 hasing
     //const msg = "aaaaaa";

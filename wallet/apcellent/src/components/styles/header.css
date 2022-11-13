@@ -1,5 +1,6 @@
-.header {
-    position: absolute;
+.container {
+    display: flex;
+    flex-direction:row;
     width: 450px;
     height: 71px;
     left: 0px;
@@ -7,21 +8,33 @@
     background: #0C2537;
 }
 
-.header .mainicon {
-    position: absolute;
+.container_left {
+    display: flex;
+    flex-direction:row;
+    width: 50%;
+    height: 100%;
+    left: 0px;
+}
+.container_right {
+    display: flex;
+    flex-direction:column;
+    width: 50%;
+    height: 100%;
+    left: 0px;
+}
+
+.mainicon {
+    align-self: center;
     width: 59px;
     height: 55px;
-    left: 11px;
-    top: 8px;
     background: url('/src/assets/apcellent_logo.png');
 }
 
-.header .network{
-    position: absolute;
+.container_right .network {
+    align-self: flex-end;
     width: 64px;
     height: 13px;
-    left: 384px;
-    top: 3px;
+    padding-top:1px;
     font-family: 'Inter';
     font-style: normal;
     font-weight: 300;
@@ -31,13 +44,11 @@
     color: #24FF00;
 }
 
-.header .setting {
-    position: absolute;
-    width: 41px;
+.container_right .setting {
+    align-self: flex-end;
+    padding-top: 5px;
+    width: 64px;
     height: 37px;
-    left: 395px;
-    top: 20px;
-    /*background: url('/src/assets/setting.png');*/
 }
 
 .header .title2 {
@@ -51,4 +62,4 @@
 .header .button {
     color:red;
     z-index: 1;
-}
+} 
