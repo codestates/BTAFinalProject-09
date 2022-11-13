@@ -55,6 +55,21 @@ const api = {
     const client = new AptosClient(this.nodeUrl);
     return client.getAccount(address);
   },
+  async getRecentBlocks(
+    currentBlockHeight: number,
+    count: number,
+  ): Promise<Types.Block[]> {
+    const client = new AptosClient(this.nodeUrl);
+    const blocks = [];
+    for (let i = 0; i < count; i++) {
+      const block = await client.getBlockByHeight(
+        currentBlockHeight - i,
+        false,
+      );
+      blocks.push(block);
+    }
+    return blocks;
+  },
 };
 
 export default api;
