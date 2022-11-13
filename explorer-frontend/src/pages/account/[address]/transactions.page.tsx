@@ -7,6 +7,7 @@ import Row from 'components/Row';
 import Pagination from '@mui/material/Pagination';
 import { useRouter } from 'next/router';
 import useAccount from 'hooks/useAccount';
+import Box from '@mui/material/Box';
 import AccountHeader from '../AccountHeader';
 import AccountTabs from '../AccountTabs';
 
@@ -45,12 +46,18 @@ export default function AccountTransactions() {
 
   return (
     <PageContainer>
-      <AccountHeader />
-      <AccountTabs tab="transactions" />
-      <TransactionTable transactions={data} />
-      <Row sx={{ p: 4, justifyContent: `center` }}>
-        <Pagination count={lastPage} page={page} onChange={handleChangePage} />
-      </Row>
+      <Box sx={{ m: 2 }}>
+        <AccountHeader />
+        <AccountTabs tab="transactions" />
+        <TransactionTable transactions={data} />
+        <Row sx={{ p: 4, justifyContent: `center` }}>
+          <Pagination
+            count={lastPage}
+            page={page}
+            onChange={handleChangePage}
+          />
+        </Row>
+      </Box>
     </PageContainer>
   );
 }

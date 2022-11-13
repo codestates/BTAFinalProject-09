@@ -22,11 +22,13 @@ export function useGetBlockByVersion({
   version,
   withTransactions = true,
 }: {
-  version: number;
+  version: number | undefined;
   withTransactions?: boolean;
 }) {
-  const result = useQuery<Types.Block>([`block`, { version }], () =>
-    api.getBlockByVersion(version, withTransactions),
+  const result = useQuery<Types.Block>(
+    [`block`, { version }],
+    () => api.getBlockByVersion(version, withTransactions),
+    { enabled: version !== undefined },
   );
 
   return result;

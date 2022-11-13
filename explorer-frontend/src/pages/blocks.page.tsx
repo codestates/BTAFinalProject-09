@@ -16,6 +16,7 @@ import Link from 'next/link';
 import dayjs from 'dayjs';
 import truncateAddress from 'utils/truncateAddress';
 import ensureMillisecondTimestamp from 'utils/ensureMillisecondTimestamp';
+import Chip from '@mui/material/Chip';
 
 const BLOCK_COUNT = 20;
 
@@ -89,7 +90,9 @@ export default function BlockList() {
                         )}
                         s ago
                       </TableCell>
-                      <TableCell>{truncateAddress(block.block_hash)}</TableCell>
+                      <TableCell>
+                        <Chip label={truncateAddress(block.block_hash)} />
+                      </TableCell>
                       <TableCell>
                         <Link href={`/txn/${block.first_version}`}>
                           {block.first_version}

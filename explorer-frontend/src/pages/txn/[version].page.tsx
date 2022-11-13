@@ -29,7 +29,7 @@ function GridRow({ title, content }: { title: string; content: ReactNode }) {
         <Typography>{title}</Typography>
       </Grid>
       <Grid item sm={9}>
-        <Typography>{content}</Typography>
+        {content}
       </Grid>
     </Grid>
   );
@@ -38,14 +38,17 @@ function GridRow({ title, content }: { title: string; content: ReactNode }) {
 export default function TransactionDetail() {
   const router = useRouter();
   const version =
-    typeof router.query.version === `string` ? router.query.version : ``;
+    typeof router.query.version === `string`
+      ? parseInt(router.query.version)
+      : undefined;
 
   const { isLoading, data, error } = useQuery<Types.Transaction>(
     [`transaction`, version],
-    () => api.getTransactionByVersion(parseInt(version)),
+    () => api.getTransactionByVersion(version || 0),
+    { enabled: !!version },
   );
 
-  const { data: block } = useGetBlockByVersion({ version: parseInt(version) });
+  const { data: block } = useGetBlockByVersion({ version });
 
   if (error) {
     return <Typography color="danger">Unkown Error</Typography>;

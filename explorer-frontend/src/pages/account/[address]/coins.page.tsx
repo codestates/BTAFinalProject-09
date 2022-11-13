@@ -12,6 +12,7 @@ import Skeleton from '@mui/material/Skeleton';
 import getFormattedBalanceStr from 'utils/getFormattedBalanceStr';
 import getCoinPathFromResourceType from 'utils/getCoinPathFromResourceType';
 import truncateAddressMiddle from 'utils/truncateAddressMiddle';
+import Box from '@mui/material/Box';
 import AccountTabs from '../AccountTabs';
 import AccountHeader from '../AccountHeader';
 
@@ -39,40 +40,42 @@ export default function AccountCoins() {
 
   return (
     <PageContainer>
-      <AccountHeader />
-      <AccountTabs tab="coins" />
-      <Table>
-        <TableHead>
-          <TableRow>
-            <TableCell>Name</TableCell>
-            <TableCell>Amount</TableCell>
-            <TableCell>Coin Type</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {!coinStores
-            ? [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((i) => (
-                <TableRow key={i}>
-                  <TableCell>
-                    <Skeleton />
-                  </TableCell>
-                  <TableCell>
-                    <Skeleton />
-                  </TableCell>
-                  <TableCell>
-                    <Skeleton />
-                  </TableCell>
-                </TableRow>
-              ))
-            : coinStores.map((store) => (
-                <TableRow key={store.type}>
-                  <TableCell>{store.name}</TableCell>
-                  <TableCell>{getFormattedBalanceStr(store.value)}</TableCell>
-                  <TableCell>{truncateAddressMiddle(store.type)}</TableCell>
-                </TableRow>
-              ))}
-        </TableBody>
-      </Table>
+      <Box sx={{ m: 2 }}>
+        <AccountHeader />
+        <AccountTabs tab="coins" />
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>Name</TableCell>
+              <TableCell>Amount</TableCell>
+              <TableCell>Coin Type</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {!coinStores
+              ? [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((i) => (
+                  <TableRow key={i}>
+                    <TableCell>
+                      <Skeleton />
+                    </TableCell>
+                    <TableCell>
+                      <Skeleton />
+                    </TableCell>
+                    <TableCell>
+                      <Skeleton />
+                    </TableCell>
+                  </TableRow>
+                ))
+              : coinStores.map((store) => (
+                  <TableRow key={store.type}>
+                    <TableCell>{store.name}</TableCell>
+                    <TableCell>{getFormattedBalanceStr(store.value)}</TableCell>
+                    <TableCell>{truncateAddressMiddle(store.type)}</TableCell>
+                  </TableRow>
+                ))}
+          </TableBody>
+        </Table>
+      </Box>
     </PageContainer>
   );
 }

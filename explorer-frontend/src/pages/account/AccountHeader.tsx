@@ -9,6 +9,8 @@ import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
 import getFormattedBalanceStr from 'utils/getFormattedBalanceStr';
 import useAccountResources from 'hooks/useAccountResources';
+import Row from 'components/Row';
+import SearchBar from 'components/SearchBar';
 
 export default function AccountHeader() {
   const router = useRouter();
@@ -25,7 +27,7 @@ export default function AccountHeader() {
       (resource) =>
         resource.type === `0x1::coin::CoinStore<0x1::aptos_coin::AptosCoin>`,
     );
-    if (!found) {
+    if (!found?.data) {
       return `0`;
     }
     return found.data.coin.value;
@@ -36,33 +38,38 @@ export default function AccountHeader() {
   };
 
   return (
-    <Grid container spacing={2}>
-      <Grid item md={8} xs={12}>
-        <Box sx={{ m: 2 }}>
-          <Typography variant="h3">Account</Typography>
-        </Box>
-        <Box sx={{ m: 2 }}>
-          <Button
-            variant="outlined"
-            color="secondary"
-            endIcon={<ContentCopyIcon />}
-            onClick={copyAddress}
-            sx={{ textTransform: `none` }}
-          >
-            {address}
-          </Button>
-        </Box>
+    <Box>
+      <Row>
+        <SearchBar sx={{ flex: 1 }} />
+      </Row>
+      <Grid container spacing={2}>
+        <Grid item md={8} xs={12}>
+          <Box sx={{ mt: 2 }}>
+            <Typography variant="h3">Account</Typography>
+          </Box>
+          <Box sx={{ mt: 2 }}>
+            <Button
+              variant="outlined"
+              color="secondary"
+              endIcon={<ContentCopyIcon />}
+              onClick={copyAddress}
+              sx={{ textTransform: `none` }}
+            >
+              {address}
+            </Button>
+          </Box>
+        </Grid>
+        <Grid item md={4} xs={12}>
+          <Card sx={{ p: 2, mt: 2 }}>
+            <Stack spacing={1.5} marginY={1}>
+              <Typography variant="h5">
+                {getFormattedBalanceStr(coinBalance)} APT
+              </Typography>
+              <Typography>Balance</Typography>
+            </Stack>
+          </Card>
+        </Grid>
       </Grid>
-      <Grid item md={4} xs={12}>
-        <Card sx={{ p: 2 }}>
-          <Stack spacing={1.5} marginY={1}>
-            <Typography variant="h5">
-              {getFormattedBalanceStr(coinBalance)} APT
-            </Typography>
-            <Typography>Balance</Typography>
-          </Stack>
-        </Card>
-      </Grid>
-    </Grid>
+    </Box>
   );
 }
