@@ -13,5 +13,8 @@
     "default_popup": "index.html",
     "default_title": "apcellent title"
   },
-  "permissions": ["storage"]
+  "permissions": ["storage","notifications","tabs","alarms"],
+  "background":{
+    "service_worker" : "background.js"
+  }
 }

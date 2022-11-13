@@ -1,6 +1,10 @@
 .App {
-  min-height: 550px;
   text-align: center;
+  max-width: 450px;
   min-width: 450px;
-  overflow-y: hidden;
+  max-height: 650px;
+  overflow: hidden;
+}
+.App::-webkit-scrollbar{
+  display:none;
 }

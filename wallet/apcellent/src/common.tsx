@@ -1,3 +1,26 @@
-export const NODE_URL = "https://fullnode.devnet.aptoslabs.com";
-export const FAUCET_URL = "https://faucet.devnet.aptoslabs.com";
-//export const aptosCoinStore = "0x1::coin::CoinStore<0x1::aptos_coin::AptosCoin>";
+const GetNetWork = (type:number)=>{
+    if(type == 1)
+        return "https://fullnode.devnet.aptoslabs.com";
+    if(type == 2)
+        return "https://fullnode.testnet.aptoslabs.com";
+    if(type == 3) // 로컬 노드 
+        return "http://localhost:3000/";
+    else
+        return "https://fullnode.devnet.aptoslabs.com";
+}
+const GetFaucetNetWork = (type:number)=>{
+    if(type == 1)
+        return "https://faucet.devnet.aptoslabs.com";
+    if(type == 2)
+        return "https://faucet.testnet.aptoslabs.com";
+    if(type == 3) // 로컬 노드 
+        return "http://localhost:3000/";
+    else
+        return "https://faucet.devnet.aptoslabs.com";
+}
+
+const common = {
+    GetNetWork,
+    GetFaucetNetWork
+};  
+export default common;

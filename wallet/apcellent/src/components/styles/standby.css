@@ -1,0 +1,63 @@
+.standby {
+    height: 550px;
+    text-align: center;
+    min-width: 450px;
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
+.standby::-webkit-scrollbar{
+    display:none;
+}
+
+.standby .title1 {
+    position: absolute;
+    width: 450px;
+    height: 46px;
+    left: 0px;
+    top: 111px;
+    
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 30px;
+    line-height: 36px;
+    text-align: center;
+    
+    color: #054BB3;
+
+}
+
+.standby .title2 {
+    position: absolute;
+    width: 450px;
+    height: 38px;
+    left: 0px;
+    top: 157px;
+    
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 25px;
+    line-height: 30px;
+    text-align: center;
+    
+    color: #054BB3;
+
+}
+
+.standby .input {
+    position: absolute;
+    width: 400px;
+    height: 155px;
+    left: 25px;
+    top: 284px;
+}
+
+
+.standby .button {
+    position: absolute;
+    width: 400px;
+    height: 35px;
+    left: 25px;
+    top: 300px;
+}
