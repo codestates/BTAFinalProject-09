@@ -1,0 +1,30 @@
+version: "3.8"
+services:
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.15.2-arm64
+    container_name: elasticsearch
+    environment:
+      ES_JAVA_OPTS: "-Xmx256m -Xms256m"
+      discovery.type: single-node
+    volumes:
+      - /usr/share/elasticsearch/data
+    ports:
+      - 9200:9200
+    networks:
+      - es&kibana
+  kibana:
+    container_name: kibana
+    image: docker.elastic.co/kibana/kibana:7.13.2
+    ports:
+      - 5601:5601
+    networks:
+      - es&kibana
+    depends_on:
+      - elasticsearch
+
+networks:
+  es&kibana:
+    driver: bridge
+
+volumes:
+  elasticsearch:
