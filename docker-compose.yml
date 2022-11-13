@@ -26,31 +26,17 @@ services:
       - localnet
     command: cargo run --package aptos-node -- -f /opt/aptos/etc/fullnode.yaml
 
-  fullnode2:
+  faucet:
     image: aptos-toolkit
     ports:
-      - 8081:8080
-      - 9102:9101
-      - 6181:6180
+      - 8081:8081
     volumes:
-      - type: volume
-        source: aptos-fullnode
-        target: /opt/aptos/data
-      - type: bind
-        source: ./node/fullnode.yaml
-        target: /opt/aptos/etc/fullnode.yaml
-      - type: bind
-        source: ./node/genesis/genesis.blob
-        target: /opt/aptos/etc/genesis.blob
-      - type: bind
-        source: ./node/genesis/waypoint.txt
-        target: /opt/aptos/etc/waypoint.txt
       - type: bind
         source: ./node/keys/validator-full-node-identity.yaml
         target: /opt/aptos/genesis/validator-full-node-identity.yaml
     networks:
       - localnet
-    command: cargo run --package aptos-node -- -f /opt/aptos/etc/fullnode.yaml
+    command: cargo run --bin aptos-faucet -- -c 8 --mint-key 0x78a019768b5fc34882f761d85c87c01a768cb5cfd52f6e7383c1088878db6765 -s http://fullnode1:8080
 
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.15.2

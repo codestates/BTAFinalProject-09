@@ -35,6 +35,17 @@ root@83079b3167f9:/# cp head.mrb /genesis/framework.mrb
 root@83079b3167f9:/# cargo run --package aptos -- genesis generate-genesis --local-repository-dir /genesis --output-dir /genesis
 ```
 
+## Faucet 실행
+```
+docker run -it aptos-toolkit \
+    cargo run --bin aptos-faucet \
+        -- \
+        -c 8 \
+        --mint-key 0x0deed08d6fed4c586a2003552f1b3fcf7f617b3de165d62e9995d9c1b0405d71 \
+        -s 0.0.0.0:8080 \
+        -p 8081:8081
+```
+
 ## Wallet 빌드
 ```
 # wallet 폴더로 이동
