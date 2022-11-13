@@ -2,8 +2,10 @@ version: "3.8"
 services:
   validators:
     build: ./node
-    ports:
-      - "8080:8080"
+    volumes:
+      - /usr/src/aptos-core/target
+    networks:
+      - localnet
 
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.15.2

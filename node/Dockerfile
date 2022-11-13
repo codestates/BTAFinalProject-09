@@ -5,14 +5,11 @@ WORKDIR /usr/src/
 USER root
 
 RUN apt-get update \
-    && apt-get install -y wget zip sudo
-RUN wget https://github.com/aptos-labs/aptos-core/archive/refs/heads/main.zip
-RUN unzip main.zip
+    && apt-get install -y sudo git
+RUN git clone https://github.com/aptos-labs/aptos-core.git
 
-WORKDIR /usr/src/aptos-core-main
+WORKDIR /usr/src/aptos-core
 
 RUN ./scripts/dev_setup.sh -b
 
-RUN source ~/.cargo/env
-
-CMD ["cargo", "run", "-p", "forge-cli", "--", "--suite", "run_forever", "--num-validators", "2", "test", "local-swarm"]
+CMD ["cargo", "run", "-p", "forge-cli", "--", "--suite", "run_forever", "--num-validator-fullnodes", "2", "test", "local-swarm"]
