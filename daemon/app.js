@@ -1,10 +1,10 @@
-const { AptosClient, BCS, TxnBuilderTypes } = require("aptos");
+const { AptosClient } = require("aptos");
 const express = require("express");
 const app = express();
 const port = 3000;
 const { Client } = require("@elastic/elasticsearch");
-const { raw } = require("express");
 var CronJob = require('cron').CronJob;
+require('events').EventEmitter.defaultMaxListeners = 0
 
 //1.ES 설치
 //2.최신 블록, Tx 가져와서 ES에 저장
@@ -15,8 +15,8 @@ const ESconnectOption = {
 }
 
 const ESClient = new Client(ESconnectOption);
-//ES에 Block 데이터 넣는 원형 함수
 
+//ES에 Block 데이터 넣는 원형 함수
 async function Block_to_ES( blockobj ) {
     try{
         ESClient.index({
@@ -35,7 +35,7 @@ async function Block_to_ES( blockobj ) {
 function Tx_to_ES( Txbunch ) {
     try{
         ESClient.index({
-        index: "tx",
+        index: "tx2",
         document: Txbunch
     })
     console.log("Tx Data Insert to ES Succeeded")
@@ -45,6 +45,21 @@ function Tx_to_ES( Txbunch ) {
     }    
 }
 
+
+function Resources_to_ES(  Resources ) {
+    try{
+        ESClient.index({
+            index: "resources",
+            document: Resources
+        })
+        console.log("Resources Data Insert to ES Succeeded!")
+    }
+    catch(err){
+        console.log(err)
+    }
+}
+
+    //https://fullnode.devnet.aptoslabs.com/v1
     const ChainEndPoint = "https://fullnode.devnet.aptoslabs.com/v1"
     const client = new AptosClient(ChainEndPoint)
     //console.log('client:', client)
@@ -52,40 +67,38 @@ function Tx_to_ES( Txbunch ) {
 
     async function Execute() {
 
-        const test = await client.getTransactionByVersion(8937481)
-        const test2 = test.payload.arguments[0]
-        const test3 = test.payload.arguments[1]
-        //const deserializer = await new BCS.Deserializer(test3[1]);
-        //console.log('deserializer', deserializer)
-        //console.log('test3[1]', test3[1])
-        
-        for(i=0; i<test3.length; i++) {
-            
-            let deserializer1 = await new BCS.Deserializer(test3[i]);
-            const rawTransaction = await TxnBuilderTypes.RawTransaction.deserialize(deserializer1);
-            console.log('rawTransaction', rawTransaction)
-        }
-        //console.log('deserializer', deserializer)
-        // const byte = await BCS.bcsToBytes(test2)
-        //console.log('byte', byte)
-        // console.log('test', test)
-        // console.log('test2', test2)
-        // console.log('test3', test3)
-        const bunchTx = await client.getTransactions('', 5);                          //최신 20개 트랜잭션 get query > expected output == [{...}, {...}, {...}]
+        const bunchTx = await client.getTransactions();                          //최신 20개 트랜잭션 get query > expected output == [{...}, {...}, {...}]
         //console.log('bunchTx:', bunchTx)
         const latestTx = await bunchTx[bunchTx.length-1]
         //console.log('latestTx:', latestTx)
         const latestTx_ver = await Number(latestTx.version)                            //최신 트랜잭션 version number 추출
         //console.log('latestTxverNum:', latestTx_ver)
         const latestBlock = await client.getBlockByVersion(latestTx_ver)               //추출한 version num으로 최신블록 계산 
-        //console.log('lastBlockNum:', latestBlock)  
+        //console.log('lastBlockNum:', latestBlock) 
+       
+
         try{
             //트랜잭션 집어넣기 
             for(i=0; i<bunchTx.length-1; i++) {
-                //changes 필드 체크로 이체 내역 여부 체크                                           
-                if(bunchTx[i].changes.length !== 0){
-                    Tx_to_ES(bunchTx)
+                //changes 필드와 payload 체크로 이체 내역 여부 체크                                           
+                if(bunchTx[i].changes.length !== 0 && bunchTx[i].payload ){
                     
+                    const obj = { bunchTx : bunchTx[i] }
+                    //ES에 Push
+                    Tx_to_ES(obj)
+
+                    //resources 데이터 Insert 위한 address 추출
+                    const senderaddr = bunchTx[i].sender
+                    const receiveraddr = bunchTx[i].payload.arguments[0]
+                    //account address 기반으로 resources 가져오기
+                    const senderResources = await client.getAccountResources(senderaddr)
+                    const receiverResources = await client.getAccountResources(receiveraddr)
+
+                    const obj2 = { resources : senderResources}
+                    const obj3 = { resources : receiverResources}
+                    //ES에 Push
+                    Resources_to_ES(obj2)
+                    Resources_to_ES(obj3)                   
                 }
             }
             //최신 블록 5개 집어넣기
@@ -96,14 +109,13 @@ function Tx_to_ES( Txbunch ) {
         }catch(err){
             console.log(err)
         }
-        //return bunchTx   
     }
     
 
 var job = new CronJob(
-	'*/3 * * * * *',
+	'*/7 * * * * *',
 	function() {
-		console.log('You will see this message every 3second');
+		console.log('You will see this message every 7second');
         Execute()
 	},
 	null,
@@ -178,6 +190,7 @@ app.listen(port, async() => {
 // "type":"block_metadata_transaction"}
 
 
+// Dev Tx example
 // {
 //     version: '8937481',
 //     hash: '0x4c1ff1fd8973cf104bc50354d36fec9f12f6cec7598c11009962c164f3d3ad19',
