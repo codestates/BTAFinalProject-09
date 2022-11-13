@@ -1,11 +1,56 @@
 version: "3.8"
 services:
-  validators:
-    build: ./node
+  fullnode1:
+    image: aptos-toolkit
+    ports:
+      - 8080:8080
+      - 9101:9101
+      - 6180:6180
     volumes:
-      - /usr/src/aptos-core/target
+      - type: volume
+        source: aptos-fullnode
+        target: /opt/aptos/data
+      - type: bind
+        source: ./node/fullnode.yaml
+        target: /opt/aptos/etc/fullnode.yaml
+      - type: bind
+        source: ./node/genesis/genesis.blob
+        target: /opt/aptos/etc/genesis.blob
+      - type: bind
+        source: ./node/genesis/waypoint.txt
+        target: /opt/aptos/etc/waypoint.txt
+      - type: bind
+        source: ./node/keys/validator-full-node-identity.yaml
+        target: /opt/aptos/genesis/validator-full-node-identity.yaml
     networks:
       - localnet
+    command: cargo run --package aptos-node -- -f /opt/aptos/etc/fullnode.yaml
+
+  fullnode2:
+    image: aptos-toolkit
+    ports:
+      - 8081:8080
+      - 9102:9101
+      - 6181:6180
+    volumes:
+      - type: volume
+        source: aptos-fullnode
+        target: /opt/aptos/data
+      - type: bind
+        source: ./node/fullnode.yaml
+        target: /opt/aptos/etc/fullnode.yaml
+      - type: bind
+        source: ./node/genesis/genesis.blob
+        target: /opt/aptos/etc/genesis.blob
+      - type: bind
+        source: ./node/genesis/waypoint.txt
+        target: /opt/aptos/etc/waypoint.txt
+      - type: bind
+        source: ./node/keys/validator-full-node-identity.yaml
+        target: /opt/aptos/genesis/validator-full-node-identity.yaml
+    networks:
+      - localnet
+    command: cargo run --package aptos-node -- -f /opt/aptos/etc/fullnode.yaml
 
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.15.2
@@ -36,3 +81,5 @@ networks:
 
 volumes:
   elasticsearch:
+  aptos-fullnode:
+    name: aptos-fullnode
