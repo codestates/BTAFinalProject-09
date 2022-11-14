@@ -29,6 +29,13 @@ services:
     depends_on:
       - localnode
 
+  daemon:
+    image: apcellent-daemon
+    build: ./daemon
+    container_name: daemon
+    networks:
+      - localnet
+
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.15.2
     container_name: elasticsearch
