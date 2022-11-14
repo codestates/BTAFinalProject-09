@@ -1,56 +1,154 @@
-.main {
-    height: 550px;
-    text-align: center;
-    min-width: 450px;
-    overflow-x: hidden;
-    overflow-y: hidden;
+.container_main {
+    display: flex;
+    flex-direction:column;
+    align-self: center;
+    width: 450px;
+    height: 100%;
 }
-.main::-webkit-scrollbar{
+.container_main::-webkit-scrollbar{
     display:none;
 }
+  
 
-.main .userinfo {
-    position: absolute;
+.container_main .con_info {
+    display: flex;
+    margin-top: 10px;
+    margin-left: 5px;
+    flex-direction:row;
+    flex-wrap: wrap;
     width: 438px;
-    height: 64px;
-    left: 6px;
-    top: 81px;
-
+    height: 100px;
     background: #0064E5;
     border-radius: 13px;
 }
 
-.main .tokeninfo {
-    box-sizing: border-box;
-    position: absolute;
-    width: 438px;
-    height: 96px;
-    left: 6px;
-    top: 159px;
+.container_main .con_info .walletname {
+    display: flex;
+    padding-top:5px;
+    padding-left: 10px;
+    width: 45%;
+    height: 18px;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 20px;
+    text-align: left;
+    z-index: 1;
+    color: #FFFFFF;
+}
 
+.container_main .con_info .account{
+    display : inline-flex;
+    width: 45%;
+    height: 18px;
+    justify-content: flex-end;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 18px;
+    z-index: 2;
+}
+
+.container_main .con_info .account .icon{
+    padding-top:5px;
+    padding-left:10px;
+    height: 18px;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 18px;
+    z-index: 2;
+}
+
+.container_main .con_info .copy{
+    display : inline-flex;
+    justify-content: start;
+    width: 9%;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 18px;
+    z-index: 2;
+}
+
+.container_main .con_info .icon{
+    font-style: normal;
+    padding-top:2px;
+    padding-left:10px;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 18px;
+    z-index: 2;
+}
+
+.container_main .con_info .address{
+    width: 80%;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 18px;
+    z-index: 2;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+}
+
+
+
+.container_main .container_token_back{
+    display: flex;
+    flex-direction:column;
+    box-sizing: border-box;
+    width: 438px;
+    height: auto;
+    margin-left:5px;
+    margin-top: 15px;
     background: #FFFCFC;
     border: 1px solid #F2EBEB;
     border-radius: 13px;
-
 }
 
-.main .tokeninfo .img {
-    position: absolute;
+
+.container_main .container_token_back .con_tokeninfo{
+    display: flex;
+    flex-direction:row;
+    align-content: stretch;
+    box-sizing: border-box;
+    width: 100%;
+    height: 50px;
+    margin-left:10px;
+    margin-top: 5px;
+}
+
+.container_main .container_token_back .con_tokeninfo .con{
+    display: flex;
+    flex-direction:row;
+    width: 110px;
+    height: 100%;
+}
+
+.container_main .container_token_back .con_tokeninfo .con .img {
     width: 34px;
     height: 34px;
-    left: 20px;
-    top: 10px;
+    align-self: center;
     background: url(/src/assets/aptcoin.png);
 }
 
-.main .tokeninfo .symbol {
-    position: absolute;
+
+.container_main .container_token_back .con_tokeninfo .con .right {
+    display: flex;
+    flex-direction:column;
+    justify-content: center;
+    margin-left: 10px;
+    width: 50%;
+    height: 100%;
+}
+
+
+.container_main .container_token_back .con_tokeninfo .con .right .symbol {
     width: 50px;
-    left: 65px;
-    top: 10px;
     text-align: start;
 
-    font-family: 'Inter';
     font-style: normal;
     font-weight: 400;
     font-size: 11px;
@@ -59,160 +157,313 @@
     color: #8B8B8B;
 }
 
-.main .tokeninfo .name {
-    position: absolute;
+.container_main .container_token_back .con_tokeninfo .con .right .name {
     width: 50px;
-    left: 63px;
-    top: 30px;
     text-align: start;
 
-    font-family: 'Inter';
     font-style: normal;
     font-weight: 400;
     font-size: 15px;
     line-height: 18px;
-    /* identical to box height */
-    
+
     color: #000000;
 }
 
-.main .tokeninfo .amount {
-    position: absolute;
-    width: 150px;
-    height: 19px;
-    left: 170px;
-    top: 20px;
-
-    text-align: start;
-    font-family: 'Inter';
+.container_main .container_token_back .con_tokeninfo .balance{
+    width: 200px;
+    text-align: center;
+    align-self: center;
     font-style: normal;
     font-weight: 400;
     font-size: 15px;
     line-height: 18px;
-    /* identical to box height */
-    
+    color: #000000;
+}
+
+.container_main .container_token_back .con_tokeninfo .buy{
+    text-align: start;
+    font-style: normal;
+    align-self: center;
+    font-weight: 200;
+    font-size: 10px;
+    line-height: 10px;
+}
+
+.container_main .container_token_back .con_tokeninfo .buy .icon{
+    font-style: normal;
+    align-self: center;
+    font-weight: 200;
+    font-size: 15px;
+    line-height: 10px;
     color: #054BB3;
 }
 
-.main .tokeninfo .buyicon {
-    position: absolute;
-    left: 330px;
-    top: 18.5px;
-    text-align: start;
-    font-family: 'Inter';
+.container_main .container_token_back .con_tokeninfo .buytext {
+
     font-style: normal;
-    font-weight: 400;
-    font-size: 18.5px;
-    line-height: 18px;
-
-    color: #054BB3;
-}
-
-.main .tokeninfo .buy {
-    position: absolute;
-    left: 352px;
-    top: 19px;
-
-    text-align: start;
-    font-family: 'Inter';
-    font-style: normal;
-    font-weight: 400;
+    align-self: center;
+    font-weight: 200;
     font-size: 13px;
-    line-height: 16px;
-    
-    color: #054BB3;
-}
-.main .tokeninfo .sendicon {
-    position: absolute;
-    left: 380px;
-    top: 17.5px;
-    text-align: start;
-    font-family: 'Inter';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 19px;
-    line-height: 18px;
-
+    line-height: 11px;
     color: #054BB3;
 }
 
-.main .tokeninfo .send {
-    position: absolute;
-    left: 400px;
-    top: 19.5px;
-
-    text-align: start;
-    font-family: 'Inter';
+.container_main .container_token_back .con_tokeninfo .send {
+    margin-left:5px;
     font-style: normal;
-    font-weight: 400;
+    align-self: center;
+    font-weight: 200;
     font-size: 13px;
-    line-height: 16px;
-    
+    line-height: 11px;
+    color: #054BB3;
+}
+
+.container_main .container_token_back .con_tokeninfo .send .icon{
+    font-style: normal;
+    align-self: center;
+    font-weight: 200;
+    font-size: 17px;
+    line-height: 10px;
     color: #054BB3;
 }
 
 
-.main .addtoken {
-    position: absolute;
+.container_main .container_token_back .con_tokeninfo .sendtext {
+    
+    font-style: normal;
+    align-self: center;
+    font-weight: 200;
+    font-size: 13px;
+    line-height: 11px;
+    color: #054BB3;
+}
+
+.container_main .addtoken {
+    margin-top:15px;
+    margin-left: 5px;
     width: 438px;
     height: 41px;
-    left: 6px;
-    top: 276px;
-    font-family: 'Inter';
     font-style: normal;
     font-weight: 700;
     font-size: 13px;
     line-height: 41px;
     color: #054BB3;
-
     background: #E2EBFA;
     border-radius: 13px;
-    
 }
 
-.main .copy{
-    position: absolute;
-    width: 12px;
-    height: 12px;
-    left: 25px;
-    top: 35px;
-    z-index: 1;
-}
-
-.main .userinfo .walletname {
-    position: absolute;
-    width: 200px;
-    height: 18px;
-    left: 25px;
-    top: 10px;
-
-    font-family: 'Inter';
+.container_main .transcationname {
+    margin-top:15px;
+    margin-left:5px;
+    width: 438px;
     font-style: normal;
-    font-weight: 400;
-    font-size: 15px;
-    line-height: 18px;
-    text-align: left;
-    
-    z-index: 2;
-    color: #FFFFFF;
+    font-weight: 700;
+    font-size: 13px;
+    line-height: 41px;
+    color: #6F8195;
 }
 
-.main .userinfo .address {
-    position: absolute;
-    width: 350px;
-    height: 13px;
-    left: 45px;
-    top: 35px;
+.container_main .con_transcation {
+    display: flex;
+    flex-direction:column;
+    margin-top:15px;
+    margin-left: 5px;
+    width: 438px;
+    height: 100%;
+    overflow-y:scroll;
+}
+.container_main .con_transcation::-webkit-scrollbar{
+    display:none;
+}
+
+.container_main .transcation {
+    display: flex;
+    flex-direction:row;
+    margin-top:20px;
+    margin-left: 0px;
+    height: 50px;
+}
+
+.container_main .transcation .down{
+    width: 30px;
+    align-self: center;
+    margin-left: 5px;
+}
+
+.container_main .transcation .icon{
+    font-style: normal;
+    font-weight: 200;
+    font-size: 30px;
+    line-height: 15px;
+    color: #054BB3;
+}
+
+.container_main .transcation .info{
+    width: 250px;
+    align-self: center;
+    margin-left: 5px;
+}
+
+.container_main .transcation .tran_title{
+    text-align: start;
+    margin-left: 5px;
     overflow:hidden;
+    font-weight: 200;
+    font-size: 15px;
+    color: #4B5F7A;
     text-overflow:ellipsis;
     white-space:nowrap;
-    
-    font-family: 'Inter';
+}
+
+.container_main .transcation .tran_time{
+    text-align: start;
+    font-weight: 200;
+    color: #516271;
+    font-size: 15px;
+    margin-left: 5px;
+}
+
+.container_main .transcation .inout{
+    align-self: center;
+    text-align: end;
     font-style: normal;
-    font-weight: 400;
-    font-size: 11px;
-    line-height: 13px;
-    text-align: left;
-    z-index: 3;
-    color: #FFFFFF; 
+    font-weight: 200;
+    font-size: 15px;
+    line-height: 15px;
+    width: 100px;
+    margin-right: 5px;
+    color: #054BB3;
+}
+
+.container_main .transcation .type{
+    align-self: center;
+    text-align: center;
+    font-style: normal;
+    font-weight: 200;
+    font-size: 15px;
+    line-height: 15px;
+    width: 20px;
+    margin-right: 5px;
+    color: #054BB3;
+}
+
+
+.container_main .transcation .arrow {
+    margin-left: 5px;
+    align-self: center;
+}
+
+.container_main .transcation .arrow .icon {
+    font-weight: 300;
+    color: #054BB3;
+    font-size: 17px;
+    margin-left: 5px;
+}
+
+.container_main .transcation .icon2 {
+    font-style: normal;
+    font-weight: 200;
+    font-size: 30px;
+    line-height: 15px;
+    color: #ce3c3c;
+}
+
+.container_modal {
+    display:flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+}
+
+.container_modal .title {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 15px;
+    align-self: center;
+    color: #054BB3;
+}
+
+.container_modal .container_account{
+    display:flex;
+    flex-direction: column;
+    margin-top:5px;
+    width: 100%;
+    height: 210px;
+    overflow-y: scroll;
+}
+
+.container_modal .container_account::-webkit-scrollbar{
+    display:none;
+}
+
+.container_modal .container_account .account{
+    display:flex;
+    flex-direction: row;
+    margin-top:5px;
+    width: 100%;
+    height: 45px;
+}
+
+.container_modal .container_account .account .icon{
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+}
+
+.container_modal .container_account .account .icon .img{
+   z-index: 2;
+   font-weight: 200;
+   font-size: 35px;
+   line-height: 15px;
+   color: #054BB3;
+}
+
+
+.container_modal .container_account .account .icon2{
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+    margin-left: 2px;
+}
+
+.container_modal .container_account .account .icon2 .img{
+    z-index: 2;
+    font-weight: 200;
+    font-size: 25px;
+    line-height: 15px;
+    color: #40e94f;
+}
+
+.container_modal .container_account .info{
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+    width: 180px;
+    margin-left: 5px;
+}
+
+.container_modal .container_account .info .name{
+    font-style: normal;
+    font-weight: 200;
+    font-size: 15px;
+    line-height: 15px;
+    align-self: flex-start;
+    color: #06080c;
+
+}
+
+.container_modal .container_account .info .address{
+    font-style: normal;
+    font-weight: 200;
+    font-size: 12px;
+    line-height: 15px;
+    width: 100%;
+    align-self: flex-start;
+    color: #054BB3;
+    text-overflow:ellipsis;
+    overflow:hidden;
 }

@@ -27,6 +27,7 @@
     align-self: center;
     width: 59px;
     height: 55px;
+    margin-left: 5px;
     background: url('/src/assets/apcellent_logo.png');
 }
 
@@ -51,7 +52,7 @@
     height: 37px;
 }
 
-.header .title2 {
+.container .title2 {
     font-family: 'Inter';
     font-style: normal;
     font-weight: 300;
@@ -59,7 +60,7 @@
     color:#054BB3;
 }
 
-.header .button {
+.container .button {
     color:red;
     z-index: 1;
 } 

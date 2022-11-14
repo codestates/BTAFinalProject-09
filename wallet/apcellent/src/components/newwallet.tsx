@@ -8,6 +8,10 @@ import common from "../common";
 import * as sha256 from "fast-sha256";
 import { useNavigate } from 'react-router-dom';
 import { NetworkContext } from '../context';
+import { WalletClient } from "../api/wallet";
+import Backdrop from '@mui/material/Backdrop';
+import CircularProgress from '@mui/material/CircularProgress';
+
 
 const NewWallet = () => {
   
@@ -20,6 +24,11 @@ const NewWallet = () => {
   const { index } = useContext(NetworkContext);
   const navigate = useNavigate();
   const bip39 = require('bip39');
+
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+  
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setChecked(event.target.checked);
@@ -46,39 +55,33 @@ const NewWallet = () => {
     if(name === "")
       setName("default")
 
+
       let convert = new Uint8Array(Buffer.from(pwd,'base64')); // let str = Buffer.from(key.secretKey).toString('base64');
       const hash = HexString.fromUint8Array(sha256.hash(convert)).toString();
       await chrome.storage.local.set({"walletname": name});
       await chrome.storage.local.set({"lock": hash});
-      // chrome.storage.local.get(["lock"], (result) => {
-      //   console.log(result["lock"])
-      // });
       createWallet();
   }
 
   const createWallet = async()  =>{
-    const account =  AptosAccount.fromDerivePath("m/44'/637'/0'/0'/0'",mnemonic);
-    const info = account.toPrivateKeyObject();
-    await chrome.storage.local.set({"info": info});
+    handleOpen()
+    const walletClient = new WalletClient(common.GetNetWork(index), common.GetFaucetNetWork(index));
+    const info = await walletClient.createWallet(mnemonic);
+    await chrome.storage.local.set({"info": new Array(info.accounts[0])});
+    await chrome.storage.local.set({"mnemonic": mnemonic});
     chrome.storage.local.get(["info"], (result) => {
       console.log(result["info"])
+      console.log(WalletClient.getAccountFromMnemonic(mnemonic).toPrivateKeyObject());
+      console.log(WalletClient.getAccountFromMnemonic(mnemonic))
     });
- 
+
     //faucet test 삭제 해도됨 
     const faucetClient = new FaucetClient(common.GetNetWork(index), common.GetFaucetNetWork(index)); // <:!:section_1
-    await faucetClient.fundAccount(account.authKey(),100_000_000);
-    await faucetClient.fundAccount(account.authKey(),100_000_000);
-    await faucetClient.fundAccount(account.authKey(),100_000_000);
-    await faucetClient.fundAccount(account.authKey(),100_000_000);
-    await faucetClient.fundAccount(account.authKey(),100_000_000);
-    await faucetClient.fundAccount(account.authKey(),100_000_000);
-    await faucetClient.fundAccount(account.authKey(),100_000_000);
-    await faucetClient.fundAccount(account.authKey(),100_000_000);
-    await faucetClient.fundAccount(account.authKey(),100_000_000);
-    await faucetClient.fundAccount(account.authKey(),100_000_000);
-    await faucetClient.fundAccount(account.authKey(),100_000_000);
-    await faucetClient.fundAccount(account.authKey(),100_000_000);
-    //navigate("/main")
+    await faucetClient.fundAccount(info.accounts[0].address,100_000_000);
+    handleClose()
+    //계정 목록 추가
+    await chrome.storage.local.set({"accountList": new Array(info.accounts[0])}) 
+    navigate("/main")
   }
 
   useEffect(() => {
@@ -115,6 +118,11 @@ const NewWallet = () => {
         onChange={handleChange}/>
       <div className='msg'>I have written down the mnemonic</div>
       <Button disabled={!checked} variant="contained" className='button' size='small' fullWidth={true} onClick={submit}>Submit</Button>
+      <Backdrop
+          sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 4 }}
+          open={open}>
+          <CircularProgress color="inherit" />
+      </Backdrop>
     </div>
   );
 };

@@ -11,7 +11,7 @@ interface Props {
 
 const NetworkProvider = ({ children }: Props): JSX.Element => {
   const [index, setIndex] = useState(1);
-
+  
   const _setIndex = (_index:number):void => {
     setIndex(_index);
   };

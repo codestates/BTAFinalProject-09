@@ -1,5 +1,4 @@
 import React, { useContext, useState } from 'react';
-import './styles/header.css';
 import SettingsSharpIcon from '@mui/icons-material/SettingsSharp';
 import Box from '@mui/material/Box';
 import ClickAwayListener from '@mui/material/ClickAwayListener';
@@ -11,14 +10,14 @@ import styled from '@emotion/styled';
 import { Typography } from '@mui/material';
 import Button from '@mui/material/Button';
 import { NetworkContext } from '../context';
-import common from '../common';
+import './styles/header.css';
 
 const Header = () => {
     interface StyledFormControlLabelProps extends FormControlLabelProps {
         checked: boolean;
     }
      
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = useState(false);
     const { _setIndex,index } = useContext(NetworkContext);
     const [networkName, setnetworkName] = useState("DevNet");
   
@@ -30,18 +29,15 @@ const Header = () => {
       setOpen(false);
     };
   
-   
-
     const styles: SxProps = {
       position: 'absolute',
       top: 52,
-      width:150,
-      height:160,
+      width:180,
+      height:170,
       right: 15,
-      zIndex: 1,
+      zIndex: 4,
       border: '1px solid',
       borderRadius:'10px',
-      p: 1,
       bgcolor: 'background.paper',
     };
 
@@ -98,7 +94,7 @@ const Header = () => {
                 {   
                     open ? (<Box sx={styles}>
                         <div className='title2' style={{"textAlign":"center"}}>Network</div> 
-                        <RadioGroup name="use-radio-group" defaultValue="first" >
+                        <RadioGroup name="use-radio-group" defaultValue="first" sx={{"margin-left":15}}>
                             <MyFormControlLabel 
                               value="1" 
                               style={{"textAlign":"center"}} 
