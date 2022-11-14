@@ -84,10 +84,12 @@ services:
   faucet:
     image: aptos-faucet
     ports:
-      - 8083:8081
+      - 8000:8000
     networks:
       - localnet
-    command: cargo run --bin aptos-faucet -- -c 8 --mint-key 0x78a019768b5fc34882f761d85c87c01a768cb5cfd52f6e7383c1088878db6765 -s http://fullnode:8080
+    command: cargo run --package aptos-faucet -- --chain-id 4 --mint-key 0x50ea555fcf8280bb21d62e21462ef6771b85508feb2f66e01dc3f432a1f1406c --port 8000 -s http://validator:8080
+    depends_on:
+      - fullnode
 
   # elasticsearch:
   #   image: docker.elastic.co/elasticsearch/elasticsearch:7.15.2

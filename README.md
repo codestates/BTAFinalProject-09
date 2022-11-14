@@ -11,6 +11,7 @@
 # 0. toolkit build
 $ docker build -t aptos-toolkit -f ./node/aptos-node.Dockerfile ./node
 $ docker build -t aptos-node -f ./node/aptos-node.Dockerfile ./node
+$ docker build -t aptos-faucet -f ./node/aptos-faucet.Dockerfile ./node
 
 # 1. key 생성
 $ docker run -it -v //f/vscodeWorkspace/BTAFinalProject-09/node/keys:/keys -v //f/vscodeWorkspace/BTAFinalProject-09/node/genesis:/genesis aptos-toolkit /bin/bash
