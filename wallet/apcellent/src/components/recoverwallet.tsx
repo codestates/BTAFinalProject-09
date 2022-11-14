@@ -76,7 +76,7 @@ const RecoverWallet = () => {
                     arr.push(result.accounts[i]);
                 }
                 console.log(arr)
-                await chrome.storage.local.set({"accountList": new Array(arr)}) 
+                await chrome.storage.local.set({"accountList": arr}) 
                 
                 console.log(result)
                 navigate("/main")
