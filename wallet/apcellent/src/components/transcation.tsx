@@ -21,7 +21,7 @@ const Transcation = (props: any) => {
                     <div className="tran_title">{obj.hash}</div>
                     <div className="tran_time">{obj.success ? "success": "fail"}</div>
                 </div>
-                <div className="inout">{obj.success ? WalletClient.getFormattedBalanceStr(WalletClient.getFormattedBalanceStr(obj.price)) : 0}</div>
+                <div className="inout">{obj.success ? WalletClient.getFormattedBalanceStr(obj.price) : 0}</div>
                 <div className="type">APT</div>
                 <div className="arrow"><ArrowForwardIosIcon className="icon"/></div>
             </div>
