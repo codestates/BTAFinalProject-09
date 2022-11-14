@@ -11,19 +11,15 @@ full_node_networks:
 - network_id:
     private: "vfn"
   listen_address: "/ip4/0.0.0.0/tcp/6181"
+  identity:
+    type: "from_config"
+    key: "30F939B6625B5001D5795EF88AB136898516B35C9E1CED7849CC53BF449D3959"
+    peer_id: "1d64a675dc98798fc58374dc520bef99d94e3e5c8248b87dcb4372123f55694d"
   seeds:
     0eca0cb24b446410bea09e9c3eee251f48e41f4b2478de63a75d24572a9aa344:
       addresses:
         - /dns/validator/tcp/6181/noise-ik/0x0eca0cb24b446410bea09e9c3eee251f48e41f4b2478de63a75d24572a9aa344/handshake/0
       role: Validator
-
-- network_id: "public"
-  discovery_method: "onchain"
-  listen_address: "/ip4/0.0.0.0/tcp/6182"
-  max_inbound_connections: 100
-  identity:
-    type: "from_file"
-    path: "/opt/aptos/genesis/validator-full-node-identity.yaml"
 
 api:
   enabled: true

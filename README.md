@@ -9,8 +9,8 @@
 ## Node 실행
 ```
 # 0. toolkit build
-$ cd node
-$ docker build -t aptos-toolkit .
+$ docker build -t aptos-toolkit -f ./node/aptos-node.Dockerfile ./node
+$ docker build -t aptos-node -f ./node/aptos-node.Dockerfile ./node
 
 # 1. key 생성
 $ docker run -it -v //f/vscodeWorkspace/BTAFinalProject-09/node/keys:/keys -v //f/vscodeWorkspace/BTAFinalProject-09/node/genesis:/genesis aptos-toolkit /bin/bash
@@ -21,8 +21,8 @@ root@83079b3167f9:/# cargo run --package aptos -- \
     genesis set-validator-configuration \
     --owner-public-identity-file /keys/public-keys.yaml \
     --username apcellent \
-    --validator-host fullnode1:6180 \
-    --full-node-host fullnode2:6181 \
+    --validator-host validator:6180 \
+    --full-node-host fullnode:6182 \
     --local-repository-dir /genesis
 
 # 3. layout 파일 생성 (node/layout.yaml 파일 참고하여 genesis 폴더에 생성)
@@ -33,6 +33,20 @@ root@83079b3167f9:/# cp head.mrb /genesis/framework.mrb
 
 # 5. genesis.blob, waypoint 생성
 root@83079b3167f9:/# cargo run --package aptos -- genesis generate-genesis --local-repository-dir /genesis --output-dir /genesis
+
+# 6. fullnode2 키 생성
+$ docker run -it -v //f/vscodeWorkspace/BTAFinalProject-09/node/keys2:/keys aptoslabs/tools:devnet /bin/bash
+root@83079b3167f9:/# aptos key generate --key-type x25519 --output-file /keys/private-key.txt
+root@83079b3167f9:/# aptos key extract-peer --host fullnode2:6182 \
+    --public-network-key-file /keys/private-key.txt.pub \
+    --output-file /keys/peer-info.yaml
+
+# 6. validator 키 생성
+$ docker run -it -v //f/vscodeWorkspace/BTAFinalProject-09/node/keys3:/keys aptoslabs/tools:devnet /bin/bash
+root@83079b3167f9:/# aptos key generate --key-type x25519 --output-file /keys/private-key.txt
+root@83079b3167f9:/# aptos key extract-peer --host validator:6181 \
+    --public-network-key-file /keys/private-key.txt.pub \
+    --output-file /keys/peer-info.yaml
 ```
 
 ## Faucet 실행

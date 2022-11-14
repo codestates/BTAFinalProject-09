@@ -1,11 +1,13 @@
 version: "3.8"
 services:
-  fullnode1:
-    image: aptos-toolkit
+  fullnode:
+    image: aptos-node
     ports:
       - 8080:8080
       - 9101:9101
-      - 6180:6180
+      - 6180
+      - 6181
+      - 6182:6182
     volumes:
       - type: volume
         source: aptos-fullnode
@@ -26,40 +28,89 @@ services:
       - localnet
     command: cargo run --package aptos-node -- -f /opt/aptos/etc/fullnode.yaml
 
-  faucet:
-    image: aptos-toolkit
+  fullnode2:
+    image: aptos-node
     ports:
-      - 8081:8081
+      - 8081:8080
+      - 9101
+      - 6182
     volumes:
+      - type: volume
+        source: aptos-fullnode2
+        target: /opt/aptos/data
       - type: bind
-        source: ./node/keys/validator-full-node-identity.yaml
-        target: /opt/aptos/genesis/validator-full-node-identity.yaml
+        source: ./node/fullnode2.yaml
+        target: /opt/aptos/etc/fullnode.yaml
+      - type: bind
+        source: ./node/genesis/genesis.blob
+        target: /opt/aptos/etc/genesis.blob
+      - type: bind
+        source: ./node/genesis/waypoint.txt
+        target: /opt/aptos/etc/waypoint.txt
     networks:
       - localnet
-    command: cargo run --bin aptos-faucet -- -c 8 --mint-key 0x78a019768b5fc34882f761d85c87c01a768cb5cfd52f6e7383c1088878db6765 -s http://fullnode1:8080
-
-  elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:7.15.2
-    container_name: elasticsearch
-    environment:
-      ES_JAVA_OPTS: "-Xmx256m -Xms256m"
-      discovery.type: single-node
-    volumes:
-      - /usr/share/elasticsearch/data
-    ports:
-      - 9200:9200
-    networks:
-      - localnet
-
-  kibana:
-    container_name: kibana
-    image: docker.elastic.co/kibana/kibana:7.13.2
-    ports:
-      - 5601:5601
-    networks:
-      - localnet
+    command: cargo run --package aptos-node -- -f /opt/aptos/etc/fullnode.yaml
     depends_on:
-      - elasticsearch
+      - fullnode
+
+  validator:
+    image: aptos-node
+    ports:
+      - 8082:8080
+      - 6180:6180
+      - 6181:6181
+    volumes:
+      - type: volume
+        source: aptos-validator
+        target: /opt/aptos/data
+      - type: bind
+        source: ./node/validator.yaml
+        target: /opt/aptos/etc/validator.yaml
+      - type: bind
+        source: ./node/genesis/genesis.blob
+        target: /opt/aptos/etc/genesis.blob
+      - type: bind
+        source: ./node/genesis/waypoint.txt
+        target: /opt/aptos/etc/waypoint.txt
+      - type: bind
+        source: ./node/keys/validator-identity.yaml
+        target: /opt/aptos/genesis/validator-identity.yaml
+    networks:
+      - localnet
+    command: cargo run --package aptos-node -- -f /opt/aptos/etc/validator.yaml
+    depends_on:
+      - fullnode
+
+  faucet:
+    image: aptos-faucet
+    ports:
+      - 8083:8081
+    networks:
+      - localnet
+    command: cargo run --bin aptos-faucet -- -c 8 --mint-key 0x78a019768b5fc34882f761d85c87c01a768cb5cfd52f6e7383c1088878db6765 -s http://fullnode:8080
+
+  # elasticsearch:
+  #   image: docker.elastic.co/elasticsearch/elasticsearch:7.15.2
+  #   container_name: elasticsearch
+  #   environment:
+  #     ES_JAVA_OPTS: "-Xmx256m -Xms256m"
+  #     discovery.type: single-node
+  #   volumes:
+  #     - /usr/share/elasticsearch/data
+  #   ports:
+  #     - 9200:9200
+  #   networks:
+  #     - localnet
+
+  # kibana:
+  #   container_name: kibana
+  #   image: docker.elastic.co/kibana/kibana:7.13.2
+  #   ports:
+  #     - 5601:5601
+  #   networks:
+  #     - localnet
+  #   depends_on:
+  #     - elasticsearch
 
 networks:
   localnet:
@@ -68,4 +119,5 @@ networks:
 volumes:
   elasticsearch:
   aptos-fullnode:
-    name: aptos-fullnode
+  aptos-fullnode2:
+  aptos-validator:
