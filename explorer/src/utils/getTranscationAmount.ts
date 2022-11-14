@@ -56,6 +56,7 @@ function isAptEvent(event: Types.Event, transaction: Types.Transaction) {
         }
       }
     }
+    return false;
   });
 
   return aptEventChange.length > 0;

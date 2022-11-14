@@ -33,6 +33,17 @@ services:
     image: apcellent-daemon
     build: ./daemon
     container_name: daemon
+    ports:
+      - 3001:3001
+    networks:
+      - localnet
+
+  explorer:
+    image: apcellent-explorer
+    build: ./explorer
+    container_name: explorer
+    ports:
+      - 3000:3000
     networks:
       - localnet
 
