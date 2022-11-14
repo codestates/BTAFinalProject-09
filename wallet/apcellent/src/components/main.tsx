@@ -228,7 +228,7 @@ const Main = () => {
             <div className="transcationname">RECENT TRANSCATION</div>
             <div className="con_transcation">
                 {/* 트랜잭션 */}
-                <Transcation pros_transcation={transcation}/>
+                <Transcation pros_transcation={transcation} _index={index}/>
             </div>
             <Modal
                 open={open}
@@ -239,7 +239,7 @@ const Main = () => {
                     <div className="container_modal">
                         <div className="title">Account</div>
                         <div className="container_account">
-                            <Modalaccount pros_account={addressList}/>
+                            <Modalaccount pros_account={addressList} index={index}/>
                         </div>
                         <Button 
                             onClick={addAccountButton}

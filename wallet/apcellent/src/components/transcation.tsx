@@ -6,16 +6,16 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 
 const Transcation = (props: any) => {
-    const {pros_transcation} = props;
+    const {pros_transcation, _index} = props;
     //console.log(pros_transcation)
 
-    const moveToTabs = async(version:string)=>{
+    const moveToTabs = async(version:string,index:number)=>{
         chrome.tabs.create({url:"http://localhost:3001/txn/"+version});
     }
 
     return(
         pros_transcation.map((obj: any,index: any) => (
-            <div className="transcation" key={index} onClick={() => moveToTabs(obj.version)}>
+            <div className="transcation" key={index} onClick={() => moveToTabs(obj.version,_index)}>
                 <div className="down">{obj.success ? <ArrowCircleUpIcon className="icon"/> : <HighlightOffIcon className="icon2"/>}</div>
                 <div className="info">
                     <div className="tran_title">{obj.hash}</div>
