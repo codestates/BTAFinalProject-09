@@ -1,5 +1,41 @@
 version: "3.8"
 services:
+  localnode:
+    image: aptos-node
+    container_name: localnode
+    ports:
+      - 8080:8080
+    networks:
+      - localnet
+    volumes:
+      - type: volume
+        source: localnode-tmp
+        target: /tmp
+    command: cargo run -p aptos-node -- --test
+
+  faucet:
+    image: aptos-faucet
+    container_name: faucet
+    ports:
+      - 8000:8000
+    networks:
+      - localnet
+    volumes:
+      - type: volume
+        source: localnode-tmp
+        target: /tmp
+        read_only: true
+    command: cargo run --package aptos-faucet -- --chain-id 4 --mint-key-file-path "/tmp/b21bd6610db613ccf0d0f93616f8ae95/mint.key" --address 0.0.0.0 --port 8000 --server-url http://localnode:8080
+    depends_on:
+      - localnode
+
+  daemon:
+    image: apcellent-daemon
+    build: ./daemon
+    container_name: daemon
+    networks:
+      - localnet
+
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.15.2
     container_name: elasticsearch
@@ -29,3 +65,4 @@ networks:
 
 volumes:
   elasticsearch:
+  localnode-tmp:

@@ -1,0 +1,92 @@
+version: "3.8"
+services:
+  fullnode:
+    image: aptos-node
+    ports:
+      - 8081:8080
+      - 9101:9101
+      - 6180
+      - 6181
+      - 6182:6182
+    volumes:
+      - type: volume
+        source: aptos-fullnode
+        target: /opt/aptos/data
+      - type: bind
+        source: ./fullnode.yaml
+        target: /opt/aptos/etc/fullnode.yaml
+      - type: bind
+        source: ./genesis/genesis.blob
+        target: /opt/aptos/etc/genesis.blob
+      - type: bind
+        source: ./genesis/waypoint.txt
+        target: /opt/aptos/etc/waypoint.txt
+      - type: bind
+        source: ./keys/validator-full-node-identity.yaml
+        target: /opt/aptos/genesis/validator-full-node-identity.yaml
+    networks:
+      - localnet
+    command: cargo run --package aptos-node -- -f /opt/aptos/etc/fullnode.yaml
+
+  fullnode2:
+    image: aptos-node
+    ports:
+      - 8082:8080
+      - 9101
+      - 6182
+    volumes:
+      - type: volume
+        source: aptos-fullnode2
+        target: /opt/aptos/data
+      - type: bind
+        source: ./fullnode2.yaml
+        target: /opt/aptos/etc/fullnode.yaml
+      - type: bind
+        source: ./genesis/genesis.blob
+        target: /opt/aptos/etc/genesis.blob
+      - type: bind
+        source: ./genesis/waypoint.txt
+        target: /opt/aptos/etc/waypoint.txt
+    networks:
+      - localnet
+    command: cargo run --package aptos-node -- -f /opt/aptos/etc/fullnode.yaml
+    depends_on:
+      - fullnode
+
+  validator:
+    image: aptos-node
+    ports:
+      - 8083:8080
+      - 6180:6180
+      - 6181:6181
+    volumes:
+      - type: volume
+        source: aptos-validator
+        target: /opt/aptos/data
+      - type: bind
+        source: ./validator.yaml
+        target: /opt/aptos/etc/validator.yaml
+      - type: bind
+        source: ./genesis/genesis.blob
+        target: /opt/aptos/etc/genesis.blob
+      - type: bind
+        source: ./genesis/waypoint.txt
+        target: /opt/aptos/etc/waypoint.txt
+      - type: bind
+        source: ./keys/validator-identity.yaml
+        target: /opt/aptos/genesis/validator-identity.yaml
+    networks:
+      - localnet
+    command: cargo run --package aptos-node -- -f /opt/aptos/etc/validator.yaml
+    depends_on:
+      - fullnode
+
+networks:
+  localnet:
+    driver: bridge
+
+volumes:
+  elasticsearch:
+  aptos-fullnode:
+  aptos-fullnode2:
+  aptos-validator:

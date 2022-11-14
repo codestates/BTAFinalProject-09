@@ -1,0 +1,30 @@
+base:
+  role: "full_node"
+  data_dir: "/opt/aptos/data"
+  waypoint:
+    from_file: "/opt/aptos/etc/waypoint.txt"
+
+execution:
+  genesis_file_location: "/opt/aptos/etc/genesis.blob"
+
+full_node_networks:
+- network_id:
+    private: "vfn"
+  listen_address: "/ip4/0.0.0.0/tcp/6181"
+  seeds:
+    0eca0cb24b446410bea09e9c3eee251f48e41f4b2478de63a75d24572a9aa344:
+      addresses:
+        - /dns/validator/tcp/6181/noise-ik/0x0eca0cb24b446410bea09e9c3eee251f48e41f4b2478de63a75d24572a9aa344/handshake/0
+      role: Validator
+
+- network_id: "public"
+  discovery_method: "onchain"
+  listen_address: "/ip4/0.0.0.0/tcp/6182"
+  max_inbound_connections: 100
+  identity:
+    type: "from_file"
+    path: "/opt/aptos/genesis/validator-full-node-identity.yaml"
+
+api:
+  enabled: true
+  address: "0.0.0.0:8080"
