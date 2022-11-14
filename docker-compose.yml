@@ -1,118 +1,56 @@
 version: "3.8"
 services:
-  fullnode:
+  localnode:
     image: aptos-node
+    container_name: localnode
     ports:
       - 8080:8080
-      - 9101:9101
-      - 6180
-      - 6181
-      - 6182:6182
-    volumes:
-      - type: volume
-        source: aptos-fullnode
-        target: /opt/aptos/data
-      - type: bind
-        source: ./node/fullnode.yaml
-        target: /opt/aptos/etc/fullnode.yaml
-      - type: bind
-        source: ./node/genesis/genesis.blob
-        target: /opt/aptos/etc/genesis.blob
-      - type: bind
-        source: ./node/genesis/waypoint.txt
-        target: /opt/aptos/etc/waypoint.txt
-      - type: bind
-        source: ./node/keys/validator-full-node-identity.yaml
-        target: /opt/aptos/genesis/validator-full-node-identity.yaml
     networks:
       - localnet
-    command: cargo run --package aptos-node -- -f /opt/aptos/etc/fullnode.yaml
-
-  fullnode2:
-    image: aptos-node
-    ports:
-      - 8081:8080
-      - 9101
-      - 6182
     volumes:
       - type: volume
-        source: aptos-fullnode2
-        target: /opt/aptos/data
-      - type: bind
-        source: ./node/fullnode2.yaml
-        target: /opt/aptos/etc/fullnode.yaml
-      - type: bind
-        source: ./node/genesis/genesis.blob
-        target: /opt/aptos/etc/genesis.blob
-      - type: bind
-        source: ./node/genesis/waypoint.txt
-        target: /opt/aptos/etc/waypoint.txt
-    networks:
-      - localnet
-    command: cargo run --package aptos-node -- -f /opt/aptos/etc/fullnode.yaml
-    depends_on:
-      - fullnode
-
-  validator:
-    image: aptos-node
-    ports:
-      - 8082:8080
-      - 6180:6180
-      - 6181:6181
-    volumes:
-      - type: volume
-        source: aptos-validator
-        target: /opt/aptos/data
-      - type: bind
-        source: ./node/validator.yaml
-        target: /opt/aptos/etc/validator.yaml
-      - type: bind
-        source: ./node/genesis/genesis.blob
-        target: /opt/aptos/etc/genesis.blob
-      - type: bind
-        source: ./node/genesis/waypoint.txt
-        target: /opt/aptos/etc/waypoint.txt
-      - type: bind
-        source: ./node/keys/validator-identity.yaml
-        target: /opt/aptos/genesis/validator-identity.yaml
-    networks:
-      - localnet
-    command: cargo run --package aptos-node -- -f /opt/aptos/etc/validator.yaml
-    depends_on:
-      - fullnode
+        source: localnode-tmp
+        target: /tmp
+    command: cargo run -p aptos-node -- --test
 
   faucet:
     image: aptos-faucet
+    container_name: faucet
     ports:
       - 8000:8000
     networks:
       - localnet
-    command: cargo run --package aptos-faucet -- --chain-id 4 --mint-key 0x50ea555fcf8280bb21d62e21462ef6771b85508feb2f66e01dc3f432a1f1406c --port 8000 -s http://validator:8080
+    volumes:
+      - type: volume
+        source: localnode-tmp
+        target: /tmp
+        read_only: true
+    command: cargo run --package aptos-faucet -- --chain-id 4 --mint-key-file-path "/tmp/b21bd6610db613ccf0d0f93616f8ae95/mint.key" --address 0.0.0.0 --port 8000 --server-url http://localnode:8080
     depends_on:
-      - fullnode
+      - localnode
 
-  # elasticsearch:
-  #   image: docker.elastic.co/elasticsearch/elasticsearch:7.15.2
-  #   container_name: elasticsearch
-  #   environment:
-  #     ES_JAVA_OPTS: "-Xmx256m -Xms256m"
-  #     discovery.type: single-node
-  #   volumes:
-  #     - /usr/share/elasticsearch/data
-  #   ports:
-  #     - 9200:9200
-  #   networks:
-  #     - localnet
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.15.2
+    container_name: elasticsearch
+    environment:
+      ES_JAVA_OPTS: "-Xmx256m -Xms256m"
+      discovery.type: single-node
+    volumes:
+      - /usr/share/elasticsearch/data
+    ports:
+      - 9200:9200
+    networks:
+      - localnet
 
-  # kibana:
-  #   container_name: kibana
-  #   image: docker.elastic.co/kibana/kibana:7.13.2
-  #   ports:
-  #     - 5601:5601
-  #   networks:
-  #     - localnet
-  #   depends_on:
-  #     - elasticsearch
+  kibana:
+    container_name: kibana
+    image: docker.elastic.co/kibana/kibana:7.13.2
+    ports:
+      - 5601:5601
+    networks:
+      - localnet
+    depends_on:
+      - elasticsearch
 
 networks:
   localnet:
@@ -120,6 +58,4 @@ networks:
 
 volumes:
   elasticsearch:
-  aptos-fullnode:
-  aptos-fullnode2:
-  aptos-validator:
+  localnode-tmp:
