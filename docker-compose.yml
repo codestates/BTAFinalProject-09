@@ -34,16 +34,23 @@ services:
     build: ./daemon
     container_name: daemon
     ports:
-      - 3001:3001
+      - 4000:3000
     networks:
       - localnet
 
   explorer:
-    image: apcellent-explorer
     build: ./explorer
     container_name: explorer
     ports:
       - 3000:3000
+    networks:
+      - localnet
+
+  explorer-testnet:
+    build: ./explorer
+    container_name: explorer-testnet
+    ports:
+      - 3001:3000
     networks:
       - localnet
 
@@ -53,6 +60,10 @@ services:
     environment:
       ES_JAVA_OPTS: "-Xmx256m -Xms256m"
       discovery.type: single-node
+      http.cors.allow-origin: "*"
+      http.cors.enabled: true
+      http.cors.allow-headers: "X-Requested-With,X-Auth-Token,Content-Type,Content-Length,Authorization"
+      http.cors.allow-credentials: true
     volumes:
       - /usr/share/elasticsearch/data
     ports:

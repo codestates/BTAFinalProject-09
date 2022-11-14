@@ -1,75 +1,9 @@
-import { AptosClient, Types } from 'aptos';
+import localnetApi from './localnetApi';
+import testnetApi from './testnetApi';
 
-interface PaginationArgs {
-  start?: number;
-  limit?: number;
-}
+const IS_TESTNET =
+  typeof window !== `undefined` ? window.location.port === `3001` : false;
 
-const api = {
-  nodeUrl: `https://fullnode.testnet.aptoslabs.com/v1`,
-  async getTransactions(args: PaginationArgs) {
-    const client = new AptosClient(this.nodeUrl);
-    const txs = await client.getTransactions(args);
-    return txs.reverse();
-  },
-  async getLedgerInfo() {
-    const client = new AptosClient(this.nodeUrl);
-    return client.getLedgerInfo();
-  },
-  async getAccountResources(address: string) {
-    const client = new AptosClient(this.nodeUrl);
-    return client.getAccountResources(address);
-  },
-  async getTableItem(tableHandle: string, data: Types.TableItemRequest) {
-    const client = new AptosClient(this.nodeUrl);
-    return client.getTableItem(tableHandle, data);
-  },
-  async getBlockByHeight(
-    height: number,
-    withTransactions: boolean,
-  ): Promise<Types.Block> {
-    const client = new AptosClient(this.nodeUrl);
-    return client.getBlockByHeight(height, withTransactions);
-  },
-  async getBlockByVersion(
-    version: number,
-    withTransactions: boolean,
-  ): Promise<Types.Block> {
-    const client = new AptosClient(this.nodeUrl);
-    return client.getBlockByVersion(version, withTransactions);
-  },
-  async getTransactionByVersion(version: number): Promise<Types.Transaction> {
-    const client = new AptosClient(this.nodeUrl);
-    return client.getTransactionByVersion(BigInt(version));
-  },
-  async getTransactionByHash(hash: string): Promise<Types.Transaction> {
-    const client = new AptosClient(this.nodeUrl);
-    return client.getTransactionByHash(hash);
-  },
-  async getAccountTransactions(address: string, args: PaginationArgs) {
-    const client = new AptosClient(this.nodeUrl);
-    const txs = await client.getAccountTransactions(address, args);
-    return txs.reverse();
-  },
-  async getAccount(address: string) {
-    const client = new AptosClient(this.nodeUrl);
-    return client.getAccount(address);
-  },
-  async getRecentBlocks(
-    currentBlockHeight: number,
-    count: number,
-  ): Promise<Types.Block[]> {
-    const client = new AptosClient(this.nodeUrl);
-    const blocks = [];
-    for (let i = 0; i < count; i++) {
-      const block = await client.getBlockByHeight(
-        currentBlockHeight - i,
-        false,
-      );
-      blocks.push(block);
-    }
-    return blocks;
-  },
-};
+const api = IS_TESTNET ? testnetApi : localnetApi;
 
 export default api;
