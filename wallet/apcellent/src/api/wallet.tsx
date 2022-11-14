@@ -232,7 +232,7 @@ async createNewAccount(code: string): Promise<AccountMetaData> {
         privateKey: account.toPrivateKeyObject().privateKeyHex,
       };
     }
-    /* eslint-enable no-await-in-loop */
+  
   }
   throw new Error("Max Account!!");
 }
@@ -255,7 +255,7 @@ async importWallet(code: string): Promise<Wallet> {
     authKey = "";
     privateKey ="";
     for (let j = 0; j < ADDRESS_GAP; j += 1) {
-      /* eslint-disable no-await-in-loop */
+
       derivationPath = `m/44'/${COIN_TYPE}'/${i}'/0'/${j}'`;
       const account = AptosAccount.fromDerivePath(derivationPath, code);
      
@@ -271,10 +271,10 @@ async importWallet(code: string): Promise<Wallet> {
           }
         );
         if (response.status === 404) {
-          // if the very first account is not present in the aptos, it will add this to metadata
+        
           if (i === 0) {
             flag = true;
-            // create new account if it is not present
+  
             await this.createNewAccount(code);
           }
           break;
@@ -289,7 +289,7 @@ async importWallet(code: string): Promise<Wallet> {
         flag = true;
         break;
       }
-      /* eslint-enable no-await-in-loop */
+  
     }
     if (!flag) {
       break;
