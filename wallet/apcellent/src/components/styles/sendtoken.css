@@ -1,9 +1,7 @@
 .sendtoken {
-    height: 650px;
+    height: 100%;
     text-align: center;
     min-width: 450px;
-    overflow-x: hidden;
-    overflow-y: visible;
 }
 .sendtoken::-webkit-scrollbar{
     display:none;
@@ -13,7 +11,7 @@
     width: 171px;
     height: 31px;
     left: 20px;
-    top: 90px;
+    top: 80px;
 
     font-family: 'Inter';
     font-style: normal;
@@ -30,7 +28,7 @@
     width: 400px;
     height: 39px;
     left: 20px;
-    top: 155px;
+    top: 135px;
 }
 
 
@@ -39,32 +37,32 @@
     width: 400px;
     height: 39px;
     left: 20px;
-    top: 230px;
+    top: 200px;
 }
 
 .sendtoken .amount_img {
     position: absolute;
     width: 10px;
-    height: 11px;
-    left: 305px;
-    top: 215.5px;
+    height: 12px;
+    left: 410px;
+    top: 186px;
 
     text-align: end;
     font-family: 'Inter';
     font-style: normal;
     font-weight: 400;
-    font-size: 8px;
-    line-height: 10px;
+    font-size: 20px;
+    line-height: 12px;
     color: #054BB3;
 }
 
 .sendtoken .amount_text {
     position: absolute;
-    width: 60px;
+    width: 100px;
     height: 11px;
-    left: 320px;
-    top: 216px;
-    text-align: start;
+    left: 305px;
+    top: 188px;
+    text-align: end;
 
     font-family: 'Inter';
     font-style: normal;
@@ -96,7 +94,7 @@
     width: 400px;
     height: 39px;
     left: 20px;
-    top: 310px;
+    top: 270px;
     
 }
 
@@ -105,7 +103,7 @@
     width: 400px;
     height: 102px;
     left: 20px;
-    top: 380px;
+    top: 330px;
 
     background: #E2EBFA;
     border-radius: 13px;
@@ -270,7 +268,7 @@
     width: 400px;
     height: 16px;
     left: 20px;
-    top: 520px;
+    top: 460px;
 
     font-family: 'Inter';
     font-style: normal;
@@ -287,5 +285,5 @@
     width: 400px;
     height: 35px;
     left: 20px;
-    top: 580px;
+    top: 520px;
 }

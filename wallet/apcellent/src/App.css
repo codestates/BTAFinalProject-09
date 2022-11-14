@@ -2,8 +2,8 @@
   text-align: center;
   max-width: 450px;
   min-width: 450px;
-  max-height: 650px;
-  overflow: hidden;
+  height: 600px;
+  overflow-y: hidden;
 }
 .App::-webkit-scrollbar{
   display:none;

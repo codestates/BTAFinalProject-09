@@ -12,26 +12,15 @@ const Home = () => {
   const bip39 = require('bip39');
 
   useEffect(() => {
+    //chrome.storage.local.clear();
     chrome.storage.local.get(["lock"], (result) => {
       if(result["lock"] !== undefined){
         navigate("/standby")
       }
     }); 
-    test()
-    // chrome.alarms.onAlarm.addListener((alarm) => {
-    //   console.log(alarm.name); // refresh
-    //   helloWorld();
+    
+    //test()
     });
-
-  // chrome.runtime.onInstalled.addListener(() => {
-  //   console.log('onInstalled...');
-  //   chrome.alarms.create('refresh', { periodInMinutes: 1 });
-  // });
-
-  // function helloWorld() {
-  //   console.log("Hello, world!");
-  // }
-
   const test = async () =>{
     //const client = new AptosClient(NODE_URL);
     //const faucetClient = new FaucetClient(NODE_URL, FAUCET_URL); // <:!:section_1
@@ -91,9 +80,6 @@ const Home = () => {
     if(flag == 2){
       navigate('/recoverwallet')
     }
-    if(flag == 3){
-      navigate('/importwallet')
-    }
   }
 
   return (
@@ -112,12 +98,6 @@ const Home = () => {
         <div className="arrow"/>
       </div>
       <div className="line" style={{"top":271}}/>
-      <div className="menu3" onClick={() => move(3)}>
-        <div className="image"/> 
-        <div className="title">Import Wallet</div>
-        <div className="arrow"/>
-      </div>
-      <div className="line" style={{"top":321}}/>
     </div>
   );
 };

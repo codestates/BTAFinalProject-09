@@ -32,14 +32,15 @@ const SendToken = () => {
 
     useEffect(() => {
         chrome.storage.local.get(["info"], (result) => {
-            setAccount(result["info"])
-            walletClient.getBalance(result["info"].address).then((_balance)=>{
+            setAccount(result["info"][0])
+            walletClient.getBalance(result["info"][0].address).then((_balance)=>{
                 setBalance(_balance / decimals);
             });
         }); 
         chrome.storage.local.get(["lock"], (result) => {
             setPwdHash(result["lock"])
         }); 
+        
         
     }, []);
 
@@ -78,7 +79,7 @@ const SendToken = () => {
     // simulation 
     const simulation = useCallback(async() =>{
         // 현재 계정
-        let _account = WalletClient.getAccountFromPrivateKey(account.privateKeyHex);
+        let _account = WalletClient.getAccountFromPrivateKey(account.privateKey);
         let _fee = await walletClient.transfer_simulation(_account, address, (amount * decimals)); //1 aptos
         setFee(parseInt(_fee)/decimals);
         setAfterBalance((balance  - amount) - (parseInt(_fee) / decimals));
@@ -92,7 +93,7 @@ const SendToken = () => {
     const sendTotoken = async() => {
         handleToggle()
         try{
-            const _account = WalletClient.getAccountFromPrivateKey(account.privateKeyHex);
+            const _account = WalletClient.getAccountFromPrivateKey(account.privateKey);
             walletClient.transfer(_account, address ,(amount * decimals)).then((result) =>{
                 console.log(result)
                 handleClose()
@@ -118,7 +119,6 @@ const SendToken = () => {
             <AccountBalanceWalletIcon className="amount_img"/>
             <div className="amount_text">{balance}</div>
 
-            <div className="amount_type">Aptos</div>
             <TextField className='amount_input'
                 focused={true}
                 size='small' 
@@ -145,7 +145,7 @@ const SendToken = () => {
                 <div className="balance_type">Aptos</div>
 
                 <div className="balancetx">Balance after tx</div>
-                <div className="balancetx_text">{afterBalance}</div>
+                <div className="balancetx_text">{afterBalance.toString()}</div>
                 <div className="balancetx_type">Aptos</div>
             </div>
             <TextField 

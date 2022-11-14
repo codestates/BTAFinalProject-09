@@ -15,6 +15,6 @@
   },
   "permissions": ["storage","notifications","tabs","alarms"],
   "background":{
-    "service_worker" : "background.js"
+    "service_worker" : "./background.js"
   }
 }

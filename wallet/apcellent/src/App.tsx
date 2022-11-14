@@ -9,12 +9,11 @@ import Standby from './components/standby';
 import RecoverWallet from './components/recoverwallet';
 import ImportWallet from './components/importwallet';
 import SendToken from './components/sendtoken';
-import Test from './components/test';
 
 const router = createHashRouter([
   {
-    path: '/a',
-    element: <Home/>,
+    path: '/',
+    element: <Home/>
   },
   {
     path: '/newWallet',
@@ -39,13 +38,8 @@ const router = createHashRouter([
   {
     path: '/sendtoken',
     element: <SendToken/>
-  },
-  {
-    path: '/',
-    element: <Test/>
-
   }
-])
+]);
 
 const App = () => {
   return (

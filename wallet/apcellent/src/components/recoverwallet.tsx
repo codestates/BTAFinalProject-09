@@ -1,11 +1,13 @@
 import common from "../common";
 import { AptosClient, AptosAccount, CoinClient, FaucetClient, HexString } from "aptos";
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './styles/recoverwallet.css';
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import * as sha256 from "fast-sha256";
+import { NetworkContext } from '../context';
+import { WalletClient } from "../api/wallet";
 
 
 const RecoverWallet = () => {
@@ -15,6 +17,7 @@ const RecoverWallet = () => {
     const [pwd, setPwd] = useState(""); //password 
     const [cpwd, setCPwd] = useState(""); //cpassword
     const [disabledFlag, setDisabledFlag] = useState(true);
+    const { index } = useContext(NetworkContext);
     const navigate = useNavigate();
 
     const handleChange_name = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -61,10 +64,25 @@ const RecoverWallet = () => {
                 chrome.storage.local.clear();
                 await chrome.storage.local.set({"walletname": name});
                 await chrome.storage.local.set({"lock": hash});
+            
 
-                const account =  AptosAccount.fromDerivePath("m/44'/637'/0'/0'/0'",mnemonic);
-                chrome.storage.local.set({"info": account.toPrivateKeyObject()});
+                const walletClient = new WalletClient(common.GetNetWork(index), common.GetFaucetNetWork(index));
+                const result = await walletClient.importWallet(mnemonic);
+                await chrome.storage.local.set({"mnemonic": mnemonic});
+                await chrome.storage.local.set({"info": new Array(result.accounts[0])});
+               
+                let arr = new Array()
+                for(let i=0;i<result.accounts.length;i++){
+                    arr.push(result.accounts[i]);
+                }
+                console.log(arr)
+                await chrome.storage.local.set({"accountList": new Array(arr)}) 
+                
+                console.log(result)
                 navigate("/main")
+                // const account =  AptosAccount.fromDerivePath("m/44'/637'/0'/0'/0'",mnemonic);
+                // chrome.storage.local.set({"info": account.toPrivateKeyObject()});
+                
             }catch(e){
                 //error 처리 해야함 니모닉 
             }
