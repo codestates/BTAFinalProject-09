@@ -27,7 +27,7 @@ export function useGetBlockByVersion({
 }) {
   const result = useQuery<Types.Block>(
     [`block`, { version }],
-    () => api.getBlockByVersion(version, withTransactions),
+    () => api.getBlockByVersion(version || 0, withTransactions),
     { enabled: version !== undefined },
   );
 

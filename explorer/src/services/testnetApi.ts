@@ -5,7 +5,7 @@ interface PaginationArgs {
   limit?: number;
 }
 
-const api = {
+const testnetApi = {
   nodeUrl: `https://fullnode.testnet.aptoslabs.com/v1`,
   async getTransactions(args: PaginationArgs) {
     const client = new AptosClient(this.nodeUrl);
@@ -72,4 +72,4 @@ const api = {
   },
 };
 
-export default api;
+export default testnetApi;
