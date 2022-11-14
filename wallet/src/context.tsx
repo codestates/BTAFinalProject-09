@@ -1,7 +1,7 @@
 import { createContext, useState } from 'react';
 
 const NetworkContext = createContext({
-  index: 1,
+  index: 3,
   _setIndex: (_index:number) => {},
 });
 
@@ -10,7 +10,7 @@ interface Props {
 }
 
 const NetworkProvider = ({ children }: Props): JSX.Element => {
-  const [index, setIndex] = useState(1);
+  const [index, setIndex] = useState(3);
   
   const _setIndex = (_index:number):void => {
     setIndex(_index);

@@ -10,7 +10,7 @@ const Transcation = (props: any) => {
     //console.log(pros_transcation)
 
     const moveToTabs = async(version:string,index:number)=>{
-        chrome.tabs.create({url:"http://localhost:3001/txn/"+version});
+        chrome.tabs.create({url:"http://localhost:3000/txn/"+version});
     }
 
     return(

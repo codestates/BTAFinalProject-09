@@ -25,7 +25,7 @@ services:
         source: localnode-tmp
         target: /tmp
         read_only: true
-    command: cargo run --package aptos-faucet -- --chain-id 4 --mint-key-file-path "/tmp/b21bd6610db613ccf0d0f93616f8ae95/mint.key" --address 0.0.0.0 --port 8000 --server-url http://localnode:8080
+    command: cargo run --package aptos-faucet -- --chain-id 4 --mint-key-file-path "/tmp/2bb8f19c7e1c9921ae00350fc5a8d5a0/mint.key" --address 0.0.0.0 --port 8000 --server-url http://localnode:8080
     depends_on:
       - localnode
 

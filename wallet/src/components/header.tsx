@@ -19,7 +19,7 @@ const Header = () => {
      
     const [open, setOpen] = useState(false);
     const { _setIndex,index } = useContext(NetworkContext);
-    const [networkName, setnetworkName] = useState("DevNet");
+    const [networkName, setnetworkName] = useState("Local Network");
   
     const handleClick = () => {
       setOpen((prev) => !prev);
